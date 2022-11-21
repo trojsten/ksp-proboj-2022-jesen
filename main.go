@@ -1,5 +1,7 @@
 package main
 
+// https://docs.google.com/document/d/1nLr4imrEPbikm79oXAVeL_KB2VZVavPHdXckPMhw_is/edit
+
 import (
 	"fmt"
 	"ksp.sk/proboj/73/game"

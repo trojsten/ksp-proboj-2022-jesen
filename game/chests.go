@@ -1,0 +1,80 @@
+package game
+
+import "ksp.sk/proboj/73/game/inventory"
+
+type ChestTile struct {
+	Position Coordinate
+	Tools    [2]Tool
+	Cocos    int
+	Coal     int
+	Stone    int
+	Gold     int
+}
+
+func (t ChestTile) Type() TileType {
+	return Chest
+}
+
+func (t ChestTile) AddItem(slot inventory.InventorySlot, quantity int) {
+	switch slot {
+	case inventory.Cocos:
+		t.Cocos += quantity
+	case inventory.Gold:
+		t.Gold += quantity
+	case inventory.Coal:
+		t.Coal += quantity
+	case inventory.Stone:
+		t.Stone += quantity
+	}
+}
+
+func (t ChestTile) RemoveItem(slot inventory.InventorySlot, quantity int) {
+	switch slot {
+	case inventory.Cocos:
+		if t.Cocos < quantity {
+			t.Cocos = 0
+		} else {
+			t.Cocos -= quantity
+		}
+	case inventory.Gold:
+		if t.Gold < quantity {
+			t.Gold = 0
+		} else {
+			t.Gold -= quantity
+		}
+	case inventory.Coal:
+		if t.Coal < quantity {
+			t.Coal = 0
+		} else {
+			t.Coal -= quantity
+		}
+	case inventory.Stone:
+		if t.Stone < quantity {
+			t.Stone = 0
+		} else {
+			t.Stone -= quantity
+		}
+	}
+}
+
+func (t ChestTile) CountItem(slot inventory.InventorySlot) int {
+	switch slot {
+	case inventory.Cocos:
+		return t.Cocos
+	case inventory.Gold:
+		return t.Gold
+	case inventory.Coal:
+		return t.Coal
+	case inventory.Stone:
+		return t.Stone
+	}
+	return 0
+}
+
+func (g Game) ChestAt(coord Coordinate) *ChestTile {
+	chest, isChest := g.World.Tiles[coord.Y][coord.X].(ChestTile)
+	if !isChest {
+		return nil
+	}
+	return &chest
+}
