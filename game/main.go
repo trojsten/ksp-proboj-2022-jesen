@@ -1,6 +1,10 @@
 package game
 
-import "ksp.sk/proboj/73/libproboj"
+import (
+	"fmt"
+	"ksp.sk/proboj/73/libproboj"
+	"strings"
+)
 
 func New(r libproboj.Runner) Game {
 	g := Game{runner: r}
@@ -13,6 +17,7 @@ func New(r libproboj.Runner) Game {
 			Name:        player,
 			Color:       "",
 			DisplayName: "",
+			Alive:       true,
 			Lemurs:      []Lemur{},
 		})
 
@@ -24,6 +29,23 @@ func New(r libproboj.Runner) Game {
 	return g
 }
 
-func (g *Game) Run() {
+func (g *Game) GreetPlayers() {
+	for i, player := range g.Players {
+		g.runner.ToPlayer(player.Name, "init", "HELLO")
+		resp, data := g.runner.ReadPlayer(player.Name)
+		if resp != libproboj.Ok {
+			g.runner.Log(fmt.Sprintf("Player %s did not respond to HELLO.", player.Name))
+			g.Players[i].Alive = false
+			g.runner.KillPlayer(player.Name)
+			continue
+		}
 
+		parts := strings.SplitN(data, " ", 2)
+		g.Players[i].DisplayName = parts[0]
+		g.Players[i].Color = parts[1]
+	}
+}
+
+func (g *Game) Run() {
+	g.GreetPlayers()
 }

@@ -23,6 +23,7 @@ type Player struct {
 	Name        string
 	Color       string
 	DisplayName string
+	Alive       bool
 	Lemurs      []Lemur
 }
 
@@ -45,7 +46,7 @@ type World struct {
 	Tiles  [][]tiles.Tile
 }
 
-func (g Game) LemurAt(coord Coordinate) *Lemur {
+func (g *Game) LemurAt(coord Coordinate) *Lemur {
 	for _, player := range g.Players {
 		for _, lemur := range player.Lemurs {
 			if lemur.Position == coord {
