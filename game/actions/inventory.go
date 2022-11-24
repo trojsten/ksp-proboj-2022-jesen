@@ -59,7 +59,7 @@ func Take(g *game.Game, lemur *game.Lemur, args []int) {
 	slot := inventory.InventorySlot(args[2])
 	quantity := args[3]
 
-	var chest inventory.Inventory = g.ChestAt(game.Coordinate{
+	var chest inventory.Inventory = tiles.ChestAt(*g, game.Coordinate{
 		X: x,
 		Y: y,
 	})
