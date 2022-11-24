@@ -2,6 +2,7 @@ package actions
 
 import (
 	"ksp.sk/proboj/73/game"
+	"ksp.sk/proboj/73/game/tiles"
 	"ksp.sk/proboj/73/game/turn"
 )
 
@@ -11,7 +12,7 @@ func Build(g *game.Game, lemur *game.Lemur, args []int) {
 	g.Turn.TileChanges = append(g.Turn.TileChanges, turn.TileChange{
 		Lemur: lemur,
 		Where: game.Coordinate{X: args[0], Y: args[1]},
-		To:    game.TileType(args[2]),
+		To:    tiles.TileType(args[2]),
 	})
 }
 
@@ -21,6 +22,6 @@ func Break(g *game.Game, lemur *game.Lemur, args []int) {
 	g.Turn.TileChanges = append(g.Turn.TileChanges, turn.TileChange{
 		Lemur: lemur,
 		Where: game.Coordinate{X: args[0], Y: args[1]},
-		To:    game.Empty,
+		To:    tiles.Empty,
 	})
 }

@@ -3,6 +3,7 @@ package turn
 import (
 	"ksp.sk/proboj/73/game"
 	"ksp.sk/proboj/73/game/inventory"
+	"ksp.sk/proboj/73/game/tiles"
 )
 
 type Turn struct {
@@ -30,7 +31,7 @@ type Movement struct {
 type TileChange struct {
 	Lemur *game.Lemur
 	Where game.Coordinate
-	To    game.TileType
+	To    tiles.TileType
 }
 
 type InventoryExtract struct {

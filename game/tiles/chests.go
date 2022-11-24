@@ -1,14 +1,15 @@
-package game
+package tiles
 
-import "ksp.sk/proboj/73/game/inventory"
+import (
+	"ksp.sk/proboj/73/game"
+	"ksp.sk/proboj/73/game/inventory"
+)
 
 type ChestTile struct {
-	Position Coordinate
-	Tools    [2]Tool
-	Cocos    int
-	Coal     int
-	Stone    int
-	Gold     int
+	Cocos int
+	Coal  int
+	Stone int
+	Gold  int
 }
 
 func (t ChestTile) Type() TileType {
@@ -71,10 +72,14 @@ func (t ChestTile) CountItem(slot inventory.InventorySlot) int {
 	return 0
 }
 
-func (g Game) ChestAt(coord Coordinate) *ChestTile {
+func ChestAt(g game.Game, coord game.Coordinate) *ChestTile {
 	chest, isChest := g.World.Tiles[coord.Y][coord.X].(ChestTile)
 	if !isChest {
 		return nil
 	}
 	return &chest
+}
+
+func NewChest() ChestTile {
+	return ChestTile{}
 }

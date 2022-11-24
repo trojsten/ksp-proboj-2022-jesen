@@ -3,6 +3,7 @@ package actions
 import (
 	"ksp.sk/proboj/73/game"
 	"ksp.sk/proboj/73/game/inventory"
+	"ksp.sk/proboj/73/game/tiles"
 	"ksp.sk/proboj/73/game/turn"
 )
 
@@ -34,7 +35,7 @@ func Put(g *game.Game, lemur *game.Lemur, args []int) {
 	var target inventory.Inventory = g.LemurAt(coords)
 
 	if target == nil {
-		target = g.ChestAt(coords)
+		target = tiles.ChestAt(*g, coords)
 	}
 	if target == nil {
 		return

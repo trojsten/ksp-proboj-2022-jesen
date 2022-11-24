@@ -1,6 +1,7 @@
 package game
 
 import (
+	"ksp.sk/proboj/73/game/tiles"
 	"ksp.sk/proboj/73/game/turn"
 	"ksp.sk/proboj/73/libproboj"
 )
@@ -41,7 +42,7 @@ type Tool interface {
 type World struct {
 	Width  int
 	Height int
-	Tiles  [][]Tile
+	Tiles  [][]tiles.Tile
 }
 
 func (g Game) LemurAt(coord Coordinate) *Lemur {
