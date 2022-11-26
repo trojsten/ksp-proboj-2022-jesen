@@ -16,4 +16,5 @@ const (
 
 type Tile interface {
 	Type() TileType
+	State() string
 }

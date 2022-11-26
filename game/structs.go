@@ -10,7 +10,7 @@ type Game struct {
 	runner  libproboj.Runner
 	World   World
 	Turn    turn.Turn
-	Players []Player
+	Players []*Player
 }
 
 type Coordinate struct {
@@ -24,7 +24,7 @@ type Player struct {
 	Color       string
 	DisplayName string
 	Alive       bool
-	Lemurs      []Lemur
+	Lemurs      []*Lemur
 }
 
 type Lemur struct {
@@ -50,9 +50,26 @@ func (g *Game) LemurAt(coord Coordinate) *Lemur {
 	for _, player := range g.Players {
 		for _, lemur := range player.Lemurs {
 			if lemur.Position == coord {
-				return &lemur
+				return lemur
 			}
 		}
 	}
 	return nil
+}
+
+func (g *Game) IsRunning() bool {
+	playersAlive := 0
+	for _, player := range g.Players {
+		if player.Alive {
+			playersAlive++
+		}
+	}
+
+	return playersAlive > 1
+}
+
+func (p *Player) Kill(g *Game) {
+	// TODO: score
+	p.Alive = false
+	g.runner.KillPlayer(p.Name)
 }

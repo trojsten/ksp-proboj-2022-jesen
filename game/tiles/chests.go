@@ -1,6 +1,7 @@
 package tiles
 
 import (
+	"fmt"
 	"ksp.sk/proboj/73/game"
 	"ksp.sk/proboj/73/game/inventory"
 )
@@ -12,11 +13,15 @@ type ChestTile struct {
 	Gold  int
 }
 
-func (t ChestTile) Type() TileType {
+func (t *ChestTile) Type() TileType {
 	return Chest
 }
 
-func (t ChestTile) AddItem(slot inventory.InventorySlot, quantity int) {
+func (t *ChestTile) State() string {
+	return fmt.Sprintf("%d %d %d %d %d", Chest, t.Cocos, t.Gold, t.Coal, t.Stone)
+}
+
+func (t *ChestTile) AddItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
 	case inventory.Cocos:
 		t.Cocos += quantity
@@ -29,7 +34,7 @@ func (t ChestTile) AddItem(slot inventory.InventorySlot, quantity int) {
 	}
 }
 
-func (t ChestTile) RemoveItem(slot inventory.InventorySlot, quantity int) {
+func (t *ChestTile) RemoveItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
 	case inventory.Cocos:
 		if t.Cocos < quantity {
@@ -58,7 +63,7 @@ func (t ChestTile) RemoveItem(slot inventory.InventorySlot, quantity int) {
 	}
 }
 
-func (t ChestTile) CountItem(slot inventory.InventorySlot) int {
+func (t *ChestTile) CountItem(slot inventory.InventorySlot) int {
 	switch slot {
 	case inventory.Cocos:
 		return t.Cocos
@@ -73,11 +78,11 @@ func (t ChestTile) CountItem(slot inventory.InventorySlot) int {
 }
 
 func ChestAt(g game.Game, coord game.Coordinate) *ChestTile {
-	chest, isChest := g.World.Tiles[coord.Y][coord.X].(ChestTile)
+	chest, isChest := g.World.Tiles[coord.Y][coord.X].(*ChestTile)
 	if !isChest {
 		return nil
 	}
-	return &chest
+	return chest
 }
 
 func NewChest() ChestTile {
