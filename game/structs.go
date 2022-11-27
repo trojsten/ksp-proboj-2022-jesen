@@ -1,7 +1,6 @@
 package game
 
 import (
-	"ksp.sk/proboj/73/game/tiles"
 	"ksp.sk/proboj/73/game/turn"
 	"ksp.sk/proboj/73/libproboj"
 )
@@ -40,12 +39,6 @@ type Lemur struct {
 type Tool interface {
 }
 
-type World struct {
-	Width  int
-	Height int
-	Tiles  [][]tiles.Tile
-}
-
 func (g *Game) LemurAt(coord Coordinate) *Lemur {
 	for _, player := range g.Players {
 		for _, lemur := range player.Lemurs {
@@ -72,4 +65,16 @@ func (p *Player) Kill(g *Game) {
 	// TODO: score
 	p.Alive = false
 	g.runner.KillPlayer(p.Name)
+}
+
+func (g *Game) Lemurs() []*Lemur {
+	lemurs := []*Lemur{}
+
+	for _, player := range g.Players {
+		for _, lemur := range player.Lemurs {
+			lemurs = append(lemurs, lemur)
+		}
+	}
+
+	return lemurs
 }

@@ -21,6 +21,10 @@ func (t *ChestTile) State() string {
 	return fmt.Sprintf("%d %d %d %d %d", Chest, t.Cocos, t.Gold, t.Coal, t.Stone)
 }
 
+func (t *ChestTile) SeeThrough() bool {
+	return false
+}
+
 func (t *ChestTile) AddItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
 	case inventory.Cocos:
