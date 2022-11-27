@@ -51,6 +51,7 @@ func (g *Game) GreetPlayers() {
 
 func (g *Game) Run() {
 	g.GreetPlayers()
+	g.World.UpdateVisibility(g)
 
 	turnNumber := 0
 	for g.IsRunning() {
@@ -104,6 +105,7 @@ func (g *Game) Run() {
 		g.Turn.Settle()
 
 		// TODO: Observer
+		g.World.UpdateVisibility(g)
 	}
 
 	// TODO: Scores

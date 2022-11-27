@@ -16,5 +16,6 @@ const (
 
 type Tile interface {
 	Type() TileType
+	SeeThrough() bool
 	State() string
 }

@@ -2,6 +2,7 @@ package game
 
 import (
 	"fmt"
+	"ksp.sk/proboj/73/game/tiles"
 	"strings"
 )
 
@@ -9,12 +10,15 @@ func (g *Game) StateForPlayer(player int) string {
 	b := strings.Builder{}
 
 	// Section 1 - WORLD
-	// TODO: Only show visible tiles
 	b.WriteString(fmt.Sprintf("%d %d\n", g.World.Width, g.World.Height))
 	for y := 0; y < g.World.Height; y++ {
 		line := []string{}
 		for x := 0; x < g.World.Width; x++ {
-			line = append(line, g.World.Tiles[y][x].State())
+			if g.World.Visible[y][x] {
+				line = append(line, g.World.Tiles[y][x].State())
+			} else {
+				line = append(line, tiles.BasicTile{Tile: tiles.Unknown}.State())
+			}
 		}
 		b.WriteString(fmt.Sprintf("%s\n", strings.Join(line, " ")))
 	}
