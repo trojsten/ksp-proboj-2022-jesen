@@ -36,8 +36,17 @@ type Lemur struct {
 	Gold     int
 }
 
-type Tool interface {
-}
+type Tool int
+
+const (
+	Lantern Tool = iota
+	Pickaxe
+	Hammer
+	Knife
+	Mirror
+	Gun
+	NoTool
+)
 
 func (g *Game) LemurAt(coord Coordinate) *Lemur {
 	for _, player := range g.Players {
