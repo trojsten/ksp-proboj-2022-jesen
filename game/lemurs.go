@@ -75,3 +75,12 @@ func (l *Lemur) CountItem(slot inventory.InventorySlot) int {
 	}
 	return 0
 }
+
+func (l *Lemur) CanReach(c Coordinate) bool {
+	for _, d := range Directions {
+		if c.X == l.Position.X+d[0] && c.Y == l.Position.Y+d[1] {
+			return true
+		}
+	}
+	return false
+}
