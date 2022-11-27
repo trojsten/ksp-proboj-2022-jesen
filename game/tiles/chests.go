@@ -89,6 +89,6 @@ func ChestAt(g game.Game, coord game.Coordinate) *ChestTile {
 	return chest
 }
 
-func NewChest() ChestTile {
-	return ChestTile{}
+func NewChest() *ChestTile {
+	return &ChestTile{}
 }

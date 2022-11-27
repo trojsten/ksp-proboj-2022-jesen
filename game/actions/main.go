@@ -18,6 +18,8 @@ func Get(action string) ActionHandler {
 		return Discard
 	case "PUT":
 		return Put
+	case "TAKE":
+		return Take
 
 	case "MOVE":
 		return Move

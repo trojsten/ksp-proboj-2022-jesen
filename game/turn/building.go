@@ -5,7 +5,7 @@ import (
 	"ksp.sk/proboj/73/game/tiles"
 )
 
-func (t Turn) SettleBuilding() {
+func (t *Turn) SettleBuilding() {
 	// First, place new tiles
 	for _, change := range t.TileChanges {
 		switch change.To {

@@ -7,16 +7,15 @@ import (
 )
 
 type Turn struct {
-	Game              *game.Game
-	Movements         []Movement
-	TileChanges       []TileChange
-	InventoryExtracts []InventoryExtract
-	InventoryInserts  []InventoryInsert
+	Game           *game.Game
+	Movements      []Movement
+	TileChanges    []TileChange
+	InventoryMoves []InventoryMove
 }
 
-func (t Turn) Settle() {
+func (t *Turn) Settle() {
 	// TODO: Settle combat
-	// TODO: Settle inventories
+	t.SettleInventories()
 	t.SettleBuilding()
 	t.SettleMovements()
 	// TODO: Settle deaths
@@ -34,14 +33,9 @@ type TileChange struct {
 	To    tiles.TileType
 }
 
-type InventoryExtract struct {
-	Inventory inventory.Inventory
-	Slot      inventory.InventorySlot
-	Quantity  int
-}
-
-type InventoryInsert struct {
-	Inventory inventory.Inventory
-	Slot      inventory.InventorySlot
-	Quantity  int
+type InventoryMove struct {
+	From     inventory.Inventory
+	To       inventory.Inventory
+	Slot     inventory.InventorySlot
+	Quantity int
 }
