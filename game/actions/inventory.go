@@ -40,6 +40,10 @@ func Put(g *game.Game, lemur *game.Lemur, args []int) {
 	if target == nil && slot != inventory.Tool1 && slot != inventory.Tool2 {
 		target = tiles.ChestAt(*g, coords)
 	}
+	// Coal can be put into furnace
+	if target == nil && slot == inventory.Coal {
+		target = tiles.FurnaceAt(*g, coords)
+	}
 	if target == nil {
 		return
 	}
@@ -67,11 +71,12 @@ func Take(g *game.Game, lemur *game.Lemur, args []int) {
 		return
 	}
 
-	var chest inventory.Inventory = tiles.ChestAt(*g, game.Coordinate{
-		X: x,
-		Y: y,
-	})
+	var chest inventory.Inventory = tiles.ChestAt(*g, c)
 
+	// Cocos can be taken from trees
+	if chest == nil && slot == inventory.Cocos {
+		chest = tiles.TreeAt(*g, c)
+	}
 	if chest == nil {
 		return
 	}

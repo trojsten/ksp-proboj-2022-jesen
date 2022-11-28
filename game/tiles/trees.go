@@ -2,6 +2,7 @@ package tiles
 
 import (
 	"fmt"
+	"ksp.sk/proboj/73/game"
 	"ksp.sk/proboj/73/game/inventory"
 )
 
@@ -49,4 +50,12 @@ func (t *TreeTile) CountItem(slot inventory.InventorySlot) int {
 
 func NewTree() *TreeTile {
 	return &TreeTile{}
+}
+
+func TreeAt(g game.Game, coord game.Coordinate) *TreeTile {
+	tile, ok := g.World.Tiles[coord.Y][coord.X].(*TreeTile)
+	if !ok {
+		return nil
+	}
+	return tile
 }
