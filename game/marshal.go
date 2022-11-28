@@ -3,6 +3,7 @@ package game
 import (
 	"fmt"
 	"ksp.sk/proboj/73/game/tiles"
+	"strconv"
 	"strings"
 )
 
@@ -29,8 +30,11 @@ func (g *Game) StateForPlayer(player int) string {
 		b.WriteString(fmt.Sprintf("%d\n", len(p.Lemurs)))
 		for _, lemur := range p.Lemurs {
 			if lemur.Alive {
-				// TODO: Tools
-				b.WriteString(fmt.Sprintf("1 %d %d %d %d %d %d\n", lemur.Position.X, lemur.Position.Y, lemur.Cocos, lemur.Gold, lemur.Coal, lemur.Stone))
+				tools := []string{}
+				for _, tool := range lemur.Tools {
+					tools = append(tools, strconv.Itoa(int(tool)))
+				}
+				b.WriteString(fmt.Sprintf("1 %d %d %d %d %d %d %s\n", lemur.Position.X, lemur.Position.Y, lemur.Cocos, lemur.Gold, lemur.Coal, lemur.Stone, strings.Join(tools, " ")))
 			} else {
 				b.WriteString("0\n")
 			}
