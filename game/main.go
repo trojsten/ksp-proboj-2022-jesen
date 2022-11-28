@@ -106,6 +106,7 @@ func (g *Game) Run() {
 
 		// TODO: Observer
 		g.World.UpdateVisibility(g)
+		g.World.Tick()
 	}
 
 	// TODO: Scores

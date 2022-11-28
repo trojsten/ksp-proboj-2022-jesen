@@ -3,11 +3,13 @@ package tiles
 import (
 	"fmt"
 	"ksp.sk/proboj/73/game"
+	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/inventory"
 )
 
 type FurnaceTile struct {
-	Coal int
+	Coal     int
+	Duration int
 }
 
 func (f *FurnaceTile) Type() TileType {
@@ -20,6 +22,16 @@ func (f *FurnaceTile) SeeThrough() bool {
 
 func (f *FurnaceTile) State() string {
 	return fmt.Sprintf("%d %d", Furnace, f.Coal)
+}
+
+func (f *FurnaceTile) Tick() {
+	f.Duration--
+	if f.Duration <= 0 {
+		if f.Coal > 0 {
+			f.Coal--
+			f.Duration = constants.FurnaceLightDuration
+		}
+	}
 }
 
 func (f *FurnaceTile) AddItem(slot inventory.InventorySlot, quantity int) {

@@ -21,6 +21,10 @@ func (b BasicTile) SeeThrough() bool {
 	return false
 }
 
+func (b BasicTile) Tick() {
+	// Intentionally left unimplemented.
+}
+
 func NewBasic(tt TileType) BasicTile {
 	return BasicTile{Tile: tt}
 }
