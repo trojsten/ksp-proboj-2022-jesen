@@ -11,6 +11,7 @@ type Turn struct {
 	Movements      []Movement
 	TileChanges    []TileChange
 	InventoryMoves []InventoryMove
+	Crafts         []Craft
 }
 
 func (t *Turn) Settle() {
@@ -38,4 +39,9 @@ type InventoryMove struct {
 	To       inventory.Inventory
 	Slot     inventory.InventorySlot
 	Quantity int
+}
+
+type Craft struct {
+	Lemur *game.Lemur
+	Tool  game.Tool
 }
