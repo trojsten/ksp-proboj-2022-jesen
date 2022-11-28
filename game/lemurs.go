@@ -44,9 +44,9 @@ func (l *Lemur) RemoveItem(slot inventory.InventorySlot, quantity int) {
 			l.Stone -= quantity
 		}
 	case inventory.Tool1:
-		l.Tools[0] = nil
+		l.Tools[0] = NoTool
 	case inventory.Tool2:
-		l.Tools[1] = nil
+		l.Tools[1] = NoTool
 	}
 }
 
@@ -61,13 +61,13 @@ func (l *Lemur) CountItem(slot inventory.InventorySlot) int {
 	case inventory.Stone:
 		return l.Stone
 	case inventory.Tool1:
-		if l.Tools[0] == nil {
+		if l.Tools[0] == NoTool {
 			return 0
 		} else {
 			return 1
 		}
 	case inventory.Tool2:
-		if l.Tools[1] == nil {
+		if l.Tools[1] == NoTool {
 			return 0
 		} else {
 			return 1
@@ -79,6 +79,15 @@ func (l *Lemur) CountItem(slot inventory.InventorySlot) int {
 func (l *Lemur) CanReach(c Coordinate) bool {
 	for _, d := range Directions {
 		if c.X == l.Position.X+d[0] && c.Y == l.Position.Y+d[1] {
+			return true
+		}
+	}
+	return false
+}
+
+func (l *Lemur) HasTool(tool Tool) bool {
+	for _, t := range l.Tools {
+		if t == tool {
 			return true
 		}
 	}
