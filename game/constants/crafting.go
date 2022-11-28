@@ -44,5 +44,5 @@ func (r Recipe) Craft(lemur *game.Lemur) {
 	lemur.RemoveItem(inventory.Stone, r.Stone)
 	lemur.RemoveItem(inventory.Gold, r.Gold)
 
-	// TODO: Add tool to inventory
+	lemur.AddTool(r.Tool)
 }

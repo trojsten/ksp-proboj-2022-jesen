@@ -93,3 +93,13 @@ func (l *Lemur) HasTool(tool Tool) bool {
 	}
 	return false
 }
+
+func (l *Lemur) AddTool(tool Tool) bool {
+	for i, t := range l.Tools {
+		if t == NoTool {
+			l.Tools[i] = tool
+			return true
+		}
+	}
+	return false
+}
