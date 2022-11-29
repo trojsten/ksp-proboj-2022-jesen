@@ -2,6 +2,7 @@ package tiles
 
 import (
 	"fmt"
+	"ksp.sk/proboj/73/game"
 	"ksp.sk/proboj/73/game/inventory"
 )
 
@@ -41,4 +42,12 @@ func (f *FurnaceTile) CountItem(slot inventory.InventorySlot) int {
 
 func NewFurnace() *FurnaceTile {
 	return &FurnaceTile{}
+}
+
+func FurnaceAt(g game.Game, coord game.Coordinate) *FurnaceTile {
+	tile, ok := g.World.Tiles[coord.Y][coord.X].(*FurnaceTile)
+	if !ok {
+		return nil
+	}
+	return tile
 }
