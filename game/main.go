@@ -113,8 +113,12 @@ func (g *Game) Run() {
 
 		g.World.UpdateVisibility(g)
 		g.World.UpdateLight(g)
-		// TODO: Observer
 		g.World.Tick()
+		for _, lemur := range g.Lemurs() {
+			lemur.Tick(g)
+		}
+
+		// TODO: Observer
 	}
 
 	// TODO: Scores

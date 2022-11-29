@@ -11,4 +11,6 @@ const (
 
 	FurnaceLightLevel = 15
 	LanternLightLevel = 10
+
+	MaxTimeInDark = 4
 )

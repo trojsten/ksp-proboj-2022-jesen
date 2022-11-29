@@ -153,7 +153,7 @@ func (w *World) UpdateLight(g *Game) {
 			}
 		} else {
 			// Lemur does not have a turned on lantern
-			if lemur.HasTool(Lantern) && lemur.CountItem(inventory.Coal) > 0 {
+			if lemur.HasTool(Lantern) && lemur.CountItem(inventory.Coal) > 0 && w.Light[lemur.Position.Y][lemur.Position.X] <= 0 {
 				// But he has a lantern and some coal
 				lemur.RemoveItem(inventory.Coal, 1)
 				lemur.LanternTime = constants.FurnaceLightDuration
