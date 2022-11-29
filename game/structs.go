@@ -52,11 +52,9 @@ func (g *Game) LemurAt(coord Coordinate) *Lemur {
 
 func (g *Game) LemursAt(coord Coordinate) int {
 	n := 0
-	for _, player := range g.Players {
-		for _, lemur := range player.Lemurs {
-			if lemur.Position == coord {
-				n++
-			}
+	for _, lemur := range g.Lemurs() {
+		if lemur.Position == coord {
+			n++
 		}
 	}
 	return n
