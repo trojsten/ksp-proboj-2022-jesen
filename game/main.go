@@ -117,7 +117,7 @@ func (g *Game) Run() {
 		for _, lemur := range g.Lemurs() {
 			lemur.Tick(g)
 		}
-		
+
 		// TODO: Observer
 	}
 

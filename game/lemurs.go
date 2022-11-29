@@ -2,6 +2,7 @@ package game
 
 import (
 	"fmt"
+	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/inventory"
 )
 
@@ -141,7 +142,7 @@ func (l *Lemur) Tick(g *Game) {
 	if g.World.Light[l.Position.Y][l.Position.X] <= 0 {
 		// The lemur is standing in the dark
 		l.TimeInDark++
-		if l.TimeInDark >= 4 {
+		if l.TimeInDark >= constants.MaxTimeInDark {
 			l.Alive = false
 		}
 	} else {
