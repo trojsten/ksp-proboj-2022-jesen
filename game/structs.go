@@ -27,18 +27,6 @@ type Player struct {
 	Lemurs      []*Lemur
 }
 
-type Lemur struct {
-	Player      int
-	Position    Coordinate
-	Alive       bool
-	Tools       [2]Tool
-	Cocos       int
-	Coal        int
-	Stone       int
-	Gold        int
-	LanternTime int
-}
-
 type Tool int
 
 const (

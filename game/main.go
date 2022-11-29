@@ -15,18 +15,19 @@ func New(r libproboj.Runner) Game {
 	players, mapData := r.ReadConfig()
 
 	for i, player := range players {
-		g.Players = append(g.Players, &Player{
+		p := &Player{
 			Idx:         i,
 			Name:        player,
 			Color:       "",
 			DisplayName: "",
 			Alive:       true,
 			Lemurs:      []*Lemur{},
-		})
-
-		/*for i := 0; i < 5; i++ {
-			g.Players[i].Lemurs = append(g.Players[i].Lemurs, Lemur{})
-		}*/
+		}
+		g.Players = append(g.Players, p)
+		err := SpawnLemur(p, &g)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 	err := g.World.LoadMap(mapData)

@@ -1,8 +1,21 @@
 package game
 
 import (
+	"fmt"
 	"ksp.sk/proboj/73/game/inventory"
 )
+
+type Lemur struct {
+	Player      int
+	Position    Coordinate
+	Alive       bool
+	Tools       [2]Tool
+	Cocos       int
+	Coal        int
+	Stone       int
+	Gold        int
+	LanternTime int
+}
 
 func (l *Lemur) AddItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
@@ -102,4 +115,19 @@ func (l *Lemur) AddTool(tool Tool) bool {
 		}
 	}
 	return false
+}
+
+func SpawnLemur(p *Player, g *Game) error {
+	sp, ok := g.GetSpawnpoint(p.Idx)
+	if !ok {
+		return fmt.Errorf("no suitable spawnpoints for player %s", p.Name)
+	}
+
+	p.Lemurs = append(p.Lemurs, &Lemur{
+		Player:   p.Idx,
+		Position: sp,
+		Alive:    true,
+		Tools:    [2]Tool{Pickaxe, NoTool},
+	})
+	return nil
 }
