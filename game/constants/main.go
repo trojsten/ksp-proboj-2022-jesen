@@ -8,4 +8,7 @@ const (
 
 	TreeGrowthRate       = 10
 	FurnaceLightDuration = 10
+
+	FurnaceLightLevel = 15
+	LanternLightLevel = 10
 )
