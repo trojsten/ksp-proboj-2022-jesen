@@ -41,7 +41,14 @@ func (g *Game) StateForPlayer(player int) string {
 		}
 	}
 
-	// TODO: Section 3 - Light
+	// Section 3 - LIGHT
+	for y := 0; y < g.World.Height; y++ {
+		line := []string{}
+		for x := 0; x < g.World.Width; x++ {
+			line = append(line, strconv.Itoa(g.World.Light[y][x]))
+		}
+		b.WriteString(fmt.Sprintf("%s\n", strings.Join(line, " ")))
+	}
 
 	return b.String()
 }
