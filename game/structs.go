@@ -71,7 +71,13 @@ func (g *Game) Lemurs() []*Lemur {
 	lemurs := []*Lemur{}
 
 	for _, player := range g.Players {
+		if !player.Alive {
+			continue
+		}
 		for _, lemur := range player.Lemurs {
+			if !lemur.Alive {
+				continue
+			}
 			lemurs = append(lemurs, lemur)
 		}
 	}
