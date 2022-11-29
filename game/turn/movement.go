@@ -1,6 +1,7 @@
 package turn
 
 import (
+	"ksp.sk/proboj/73/game"
 	"ksp.sk/proboj/73/game/tiles"
 )
 
@@ -12,5 +13,18 @@ func (t *Turn) SettleMovements() {
 		}
 
 		movement.Lemur.Position = movement.To
+	}
+
+	for _, teleport := range t.MirrorTeleports {
+		if !teleport.Lemur.HasTool(game.Mirror) {
+			continue
+		}
+
+		sp, ok := t.Game.GetSpawnpoint(teleport.Lemur.Player)
+		if !ok {
+			continue
+		}
+
+		teleport.Lemur.Position = sp
 	}
 }

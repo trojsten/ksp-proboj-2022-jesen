@@ -28,6 +28,7 @@ type Player struct {
 }
 
 type Lemur struct {
+	Player      int
 	Position    Coordinate
 	Alive       bool
 	Tools       [2]Tool
