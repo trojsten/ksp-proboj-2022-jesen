@@ -20,6 +20,8 @@ func Get(action string) ActionHandler {
 		return Put
 	case "TAKE":
 		return Take
+	case "CRAFT":
+		return Craft
 
 	case "MOVE":
 		return Move
