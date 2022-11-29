@@ -1,6 +1,7 @@
 package game
 
 import (
+	"ksp.sk/proboj/73/game/tiles"
 	"ksp.sk/proboj/73/game/turn"
 	"ksp.sk/proboj/73/libproboj"
 )
@@ -87,4 +88,26 @@ func (g *Game) Lemurs() []*Lemur {
 	}
 
 	return lemurs
+}
+
+// GetSpawnpoint finds the first empty spawnpoint for a given player
+// the second return value indicates if finding the spawnpoint was
+// successful
+func (g *Game) GetSpawnpoint(player int) (Coordinate, bool) {
+	for _, spawnpoint := range g.World.Spawnpoints {
+		if spawnpoint.Player != player {
+			continue
+		}
+
+		if g.LemurAt(spawnpoint.Position) != nil {
+			continue
+		}
+
+		if g.World.Tiles[spawnpoint.Position.Y][spawnpoint.Position.X].Type() != tiles.Empty {
+			continue
+		}
+
+		return spawnpoint.Position, true
+	}
+	return Coordinate{}, false
 }
