@@ -7,11 +7,17 @@ import (
 )
 
 type World struct {
-	Width   int
-	Height  int
-	Tiles   [][]tiles.Tile
-	Visible [][]bool
-	Light   [][]int
+	Width       int
+	Height      int
+	Tiles       [][]tiles.Tile
+	Visible     [][]bool
+	Light       [][]int
+	Spawnpoints []Spawnpoint
+}
+
+type Spawnpoint struct {
+	Position Coordinate
+	Player   int
 }
 
 var Directions = [4][2]int{{1, 0}, {0, 1}, {-1, 0}, {0, -1}}

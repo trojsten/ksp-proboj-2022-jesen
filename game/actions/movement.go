@@ -15,10 +15,5 @@ func Move(g *game.Game, lemur *game.Lemur, args []int) {
 }
 
 func Mirror(g *game.Game, lemur *game.Lemur, args []int) {
-	// TODO: Check if lemur has mirror
-	g.Turn.Movements = append(g.Turn.Movements, turn.Movement{
-		Lemur: lemur,
-		From:  lemur.Position,
-		To:    game.Coordinate{X: 0, Y: 0}, // TODO: Real spawnpoint
-	})
+	g.Turn.MirrorTeleports = append(g.Turn.MirrorTeleports, turn.MirrorTeleport{Lemur: lemur})
 }

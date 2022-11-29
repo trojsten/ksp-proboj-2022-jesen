@@ -12,21 +12,27 @@ import (
 func New(r libproboj.Runner) Game {
 	g := Game{runner: r}
 
-	players, _ := r.ReadConfig()
+	players, mapData := r.ReadConfig()
 
 	for i, player := range players {
-		g.Players = append(g.Players, &Player{
+		p := &Player{
 			Idx:         i,
 			Name:        player,
 			Color:       "",
 			DisplayName: "",
 			Alive:       true,
 			Lemurs:      []*Lemur{},
-		})
+		}
+		g.Players = append(g.Players, p)
+		err := SpawnLemur(p, &g)
+		if err != nil {
+			panic(err)
+		}
+	}
 
-		/*for i := 0; i < 5; i++ {
-			g.Players[i].Lemurs = append(g.Players[i].Lemurs, Lemur{})
-		}*/
+	err := g.World.LoadMap(mapData)
+	if err != nil {
+		panic(err)
 	}
 
 	return g

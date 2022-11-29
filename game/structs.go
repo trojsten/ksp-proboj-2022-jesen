@@ -1,6 +1,7 @@
 package game
 
 import (
+	"ksp.sk/proboj/73/game/tiles"
 	"ksp.sk/proboj/73/game/turn"
 	"ksp.sk/proboj/73/libproboj"
 )
@@ -24,17 +25,6 @@ type Player struct {
 	DisplayName string
 	Alive       bool
 	Lemurs      []*Lemur
-}
-
-type Lemur struct {
-	Position    Coordinate
-	Alive       bool
-	Tools       [2]Tool
-	Cocos       int
-	Coal        int
-	Stone       int
-	Gold        int
-	LanternTime int
 }
 
 type Tool int
@@ -81,10 +71,38 @@ func (g *Game) Lemurs() []*Lemur {
 	lemurs := []*Lemur{}
 
 	for _, player := range g.Players {
+		if !player.Alive {
+			continue
+		}
 		for _, lemur := range player.Lemurs {
+			if !lemur.Alive {
+				continue
+			}
 			lemurs = append(lemurs, lemur)
 		}
 	}
 
 	return lemurs
+}
+
+// GetSpawnpoint finds the first empty spawnpoint for a given player
+// the second return value indicates if finding the spawnpoint was
+// successful
+func (g *Game) GetSpawnpoint(player int) (Coordinate, bool) {
+	for _, spawnpoint := range g.World.Spawnpoints {
+		if spawnpoint.Player != player {
+			continue
+		}
+
+		if g.LemurAt(spawnpoint.Position) != nil {
+			continue
+		}
+
+		if g.World.Tiles[spawnpoint.Position.Y][spawnpoint.Position.X].Type() != tiles.Empty {
+			continue
+		}
+
+		return spawnpoint.Position, true
+	}
+	return Coordinate{}, false
 }

@@ -7,11 +7,12 @@ import (
 )
 
 type Turn struct {
-	Game           *game.Game
-	Movements      []Movement
-	TileChanges    []TileChange
-	InventoryMoves []InventoryMove
-	Crafts         []Craft
+	Game            *game.Game
+	Movements       []Movement
+	TileChanges     []TileChange
+	InventoryMoves  []InventoryMove
+	MirrorTeleports []MirrorTeleport
+	Crafts          []Craft
 }
 
 func (t *Turn) Settle() {
@@ -26,6 +27,10 @@ type Movement struct {
 	Lemur *game.Lemur
 	From  game.Coordinate
 	To    game.Coordinate
+}
+
+type MirrorTeleport struct {
+	Lemur *game.Lemur
 }
 
 type TileChange struct {
