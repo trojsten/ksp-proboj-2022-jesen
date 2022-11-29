@@ -25,6 +25,10 @@ func (t *ChestTile) SeeThrough() bool {
 	return false
 }
 
+func (t *ChestTile) Tick() {
+	// Intentionally left unimplemented.
+}
+
 func (t *ChestTile) AddItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
 	case inventory.Cocos:

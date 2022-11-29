@@ -3,11 +3,13 @@ package tiles
 import (
 	"fmt"
 	"ksp.sk/proboj/73/game"
+	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/inventory"
 )
 
 type TreeTile struct {
 	HasCocos bool
+	Growth   int
 }
 
 func (t *TreeTile) Type() TileType {
@@ -23,6 +25,18 @@ func (t *TreeTile) State() string {
 		return fmt.Sprintf("%d 1", Tree)
 	}
 	return fmt.Sprintf("%d 0", Tree)
+}
+
+func (t *TreeTile) Tick() {
+	if t.HasCocos {
+		return
+	}
+
+	t.Growth--
+	if t.Growth <= 0 {
+		t.HasCocos = true
+		t.Growth = constants.TreeGrowthRate
+	}
 }
 
 func (t *TreeTile) AddItem(slot inventory.InventorySlot, quantity int) {
@@ -49,7 +63,7 @@ func (t *TreeTile) CountItem(slot inventory.InventorySlot) int {
 }
 
 func NewTree() *TreeTile {
-	return &TreeTile{}
+	return &TreeTile{Growth: constants.TreeGrowthRate}
 }
 
 func TreeAt(g game.Game, coord game.Coordinate) *TreeTile {

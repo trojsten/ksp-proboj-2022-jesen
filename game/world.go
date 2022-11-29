@@ -59,3 +59,11 @@ func (w *World) UpdateVisibility(g *Game) {
 		w.visibleFrom(lemur.Position)
 	}
 }
+
+func (w *World) Tick() {
+	for y := 0; y < w.Height; y++ {
+		for x := 0; x < w.Width; x++ {
+			w.Tiles[y][x].Tick()
+		}
+	}
+}
