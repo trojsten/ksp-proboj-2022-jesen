@@ -87,7 +87,7 @@ func (w *World) lightFrom(c Coordinate, level int) {
 
 	for len(q) > 0 {
 		bfs := q[0]
-		q = q[:1]
+		q = q[1:]
 
 		if bfs.Level <= 0 {
 			continue
