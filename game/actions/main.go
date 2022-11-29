@@ -9,6 +9,9 @@ func Get(action string) ActionHandler {
 	case "NOOP":
 		return Noop
 
+	case "STAB":
+		return Stab
+
 	case "BUILD":
 		return Build
 	case "BREAK":
