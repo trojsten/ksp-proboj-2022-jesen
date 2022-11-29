@@ -10,13 +10,13 @@ import (
 
 func randStoneTile() tiles.BasicTile {
 	r := rand.Intn(100)
-	if r < 50 {
+	if r < 80 {
 		return tiles.NewBasic(tiles.Stone)
 	}
-	if r < 75 {
-		return tiles.NewBasic(tiles.Gold)
+	if r < 95 {
+		return tiles.NewBasic(tiles.Coal)
 	}
-	return tiles.NewBasic(tiles.Coal)
+	return tiles.NewBasic(tiles.Gold)
 }
 
 func (w *World) LoadMap(filename string) error {
