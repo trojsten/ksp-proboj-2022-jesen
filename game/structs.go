@@ -40,11 +40,9 @@ const (
 )
 
 func (g *Game) LemurAt(coord Coordinate) *Lemur {
-	for _, player := range g.Players {
-		for _, lemur := range player.Lemurs {
-			if lemur.Position == coord {
-				return lemur
-			}
+	for _, lemur := range g.Lemurs() {
+		if lemur.Position == coord {
+			return lemur
 		}
 	}
 	return nil
