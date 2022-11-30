@@ -1,17 +1,16 @@
 package actions
 
 import (
-	"ksp.sk/proboj/73/game"
 	"ksp.sk/proboj/73/game/inventory"
-	"ksp.sk/proboj/73/game/tiles"
-	"ksp.sk/proboj/73/game/turn"
+	"ksp.sk/proboj/73/game/locate"
+	"ksp.sk/proboj/73/game/structs"
 )
 
-func Discard(g *game.Game, lemur *game.Lemur, args []int) {
+func Discard(g *structs.Game, lemur *structs.Lemur, args []int) {
 	slot := inventory.InventorySlot(args[0])
 	quantity := args[1]
 
-	g.Turn.InventoryMoves = append(g.Turn.InventoryMoves, turn.InventoryMove{
+	g.Turn.InventoryMoves = append(g.Turn.InventoryMoves, structs.InventoryMove{
 		From:     lemur,
 		To:       nil,
 		Slot:     slot,
@@ -19,9 +18,9 @@ func Discard(g *game.Game, lemur *game.Lemur, args []int) {
 	})
 }
 
-func Put(g *game.Game, lemur *game.Lemur, args []int) {
+func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 	x, y := args[0], args[1]
-	c := game.Coordinate{X: x, Y: y}
+	c := structs.Coordinate{X: x, Y: y}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
 		return
 	}
@@ -29,7 +28,7 @@ func Put(g *game.Game, lemur *game.Lemur, args []int) {
 	slot := inventory.InventorySlot(args[2])
 	quantity := args[3]
 
-	coords := game.Coordinate{
+	coords := structs.Coordinate{
 		X: x,
 		Y: y,
 	}
@@ -38,17 +37,17 @@ func Put(g *game.Game, lemur *game.Lemur, args []int) {
 
 	// Tools cannot be stored in chests
 	if target == nil && slot != inventory.Tool1 && slot != inventory.Tool2 {
-		target = tiles.ChestAt(*g, coords)
+		target = locate.ChestAt(*g, coords)
 	}
 	// Coal can be put into furnace
 	if target == nil && slot == inventory.Coal {
-		target = tiles.FurnaceAt(*g, coords)
+		target = locate.FurnaceAt(*g, coords)
 	}
 	if target == nil {
 		return
 	}
 
-	g.Turn.InventoryMoves = append(g.Turn.InventoryMoves, turn.InventoryMove{
+	g.Turn.InventoryMoves = append(g.Turn.InventoryMoves, structs.InventoryMove{
 		From:     lemur,
 		To:       target,
 		Slot:     slot,
@@ -56,9 +55,9 @@ func Put(g *game.Game, lemur *game.Lemur, args []int) {
 	})
 }
 
-func Take(g *game.Game, lemur *game.Lemur, args []int) {
+func Take(g *structs.Game, lemur *structs.Lemur, args []int) {
 	x, y := args[0], args[1]
-	c := game.Coordinate{X: x, Y: y}
+	c := structs.Coordinate{X: x, Y: y}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
 		return
 	}
@@ -71,17 +70,17 @@ func Take(g *game.Game, lemur *game.Lemur, args []int) {
 		return
 	}
 
-	var chest inventory.Inventory = tiles.ChestAt(*g, c)
+	var chest inventory.Inventory = locate.ChestAt(*g, c)
 
 	// Cocos can be taken from trees
 	if chest == nil && slot == inventory.Cocos {
-		chest = tiles.TreeAt(*g, c)
+		chest = locate.TreeAt(*g, c)
 	}
 	if chest == nil {
 		return
 	}
 
-	g.Turn.InventoryMoves = append(g.Turn.InventoryMoves, turn.InventoryMove{
+	g.Turn.InventoryMoves = append(g.Turn.InventoryMoves, structs.InventoryMove{
 		From:     chest,
 		To:       lemur,
 		Slot:     slot,

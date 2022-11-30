@@ -1,23 +1,22 @@
 package actions
 
 import (
-	"ksp.sk/proboj/73/game"
-	"ksp.sk/proboj/73/game/turn"
+	"ksp.sk/proboj/73/game/structs"
 )
 
-func Move(g *game.Game, lemur *game.Lemur, args []int) {
-	c := game.Coordinate{X: args[0], Y: args[1]}
+func Move(g *structs.Game, lemur *structs.Lemur, args []int) {
+	c := structs.Coordinate{X: args[0], Y: args[1]}
 	if !g.World.ValidCoordinate(c) || !lemur.CanReach(c) {
 		return
 	}
 
-	g.Turn.Movements = append(g.Turn.Movements, turn.Movement{
+	g.Turn.Movements = append(g.Turn.Movements, structs.Movement{
 		Lemur: lemur,
 		From:  lemur.Position,
 		To:    c,
 	})
 }
 
-func Mirror(g *game.Game, lemur *game.Lemur, args []int) {
-	g.Turn.MirrorTeleports = append(g.Turn.MirrorTeleports, turn.MirrorTeleport{Lemur: lemur})
+func Mirror(g *structs.Game, lemur *structs.Lemur, args []int) {
+	g.Turn.MirrorTeleports = append(g.Turn.MirrorTeleports, structs.MirrorTeleport{Lemur: lemur})
 }

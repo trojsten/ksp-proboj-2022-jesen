@@ -1,17 +1,16 @@
 package actions
 
 import (
-	"ksp.sk/proboj/73/game"
-	"ksp.sk/proboj/73/game/turn"
+	"ksp.sk/proboj/73/game/structs"
 )
 
-func Stab(g *game.Game, lemur *game.Lemur, args []int) {
-	c := game.Coordinate{X: args[0], Y: args[1]}
+func Stab(g *structs.Game, lemur *structs.Lemur, args []int) {
+	c := structs.Coordinate{X: args[0], Y: args[1]}
 	if !g.World.ValidCoordinate(c) || !lemur.CanReach(c) {
 		return
 	}
 
-	if !lemur.HasTool(game.Knife) {
+	if !lemur.HasTool(structs.Knife) {
 		return
 	}
 
@@ -20,7 +19,7 @@ func Stab(g *game.Game, lemur *game.Lemur, args []int) {
 		return
 	}
 
-	g.Turn.Stabs = append(g.Turn.Stabs, turn.Stab{
+	g.Turn.Stabs = append(g.Turn.Stabs, structs.Stab{
 		Attacker: lemur,
 		Target:   target,
 	})

@@ -1,8 +1,10 @@
 package actions
 
-import "ksp.sk/proboj/73/game"
+import (
+	"ksp.sk/proboj/73/game/structs"
+)
 
-type ActionHandler func(g *game.Game, lemur *game.Lemur, args []int)
+type ActionHandler func(g *structs.Game, lemur *structs.Lemur, args []int)
 
 func Get(action string) ActionHandler {
 	switch action {

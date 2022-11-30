@@ -4,27 +4,29 @@ import (
 	"bufio"
 	"fmt"
 	"ksp.sk/proboj/73/game/actions"
+	"ksp.sk/proboj/73/game/light"
+	"ksp.sk/proboj/73/game/structs"
 	"ksp.sk/proboj/73/game/turn"
 	"ksp.sk/proboj/73/libproboj"
 	"strings"
 )
 
-func New(r libproboj.Runner) Game {
-	g := Game{runner: r}
+func New(r libproboj.Runner) structs.Game {
+	g := structs.Game{Runner: r}
 
 	players, mapData := r.ReadConfig()
 
 	for i, player := range players {
-		p := &Player{
+		p := &structs.Player{
 			Idx:         i,
 			Name:        player,
 			Color:       "",
 			DisplayName: "",
 			Alive:       true,
-			Lemurs:      []*Lemur{},
+			Lemurs:      []*structs.Lemur{},
 		}
 		g.Players = append(g.Players, p)
-		err := SpawnLemur(p, &g)
+		err := structs.SpawnLemur(p, &g)
 		if err != nil {
 			panic(err)
 		}
@@ -38,14 +40,14 @@ func New(r libproboj.Runner) Game {
 	return g
 }
 
-func (g *Game) GreetPlayers() {
+func GreetPlayers(g *structs.Game) {
 	for i, player := range g.Players {
-		g.runner.ToPlayer(player.Name, "init", "HELLO")
-		resp, data := g.runner.ReadPlayer(player.Name)
+		g.Runner.ToPlayer(player.Name, "init", "HELLO")
+		resp, data := g.Runner.ReadPlayer(player.Name)
 		if resp != libproboj.Ok {
-			g.runner.Log(fmt.Sprintf("Player %s did not respond to HELLO.", player.Name))
+			g.Runner.Log(fmt.Sprintf("Player %s did not respond to HELLO.", player.Name))
 			g.Players[i].Alive = false
-			g.runner.KillPlayer(player.Name)
+			g.Runner.KillPlayer(player.Name)
 			continue
 		}
 
@@ -55,14 +57,14 @@ func (g *Game) GreetPlayers() {
 	}
 }
 
-func (g *Game) Run() {
-	g.GreetPlayers()
+func Run(g *structs.Game) {
+	GreetPlayers(g)
 	g.World.UpdateVisibility(g)
-	g.World.UpdateLight(g)
+	light.UpdateLight(g)
 
 	turnNumber := 0
 	for g.IsRunning() {
-		g.Turn = turn.Turn{Game: g}
+		g.Turn = structs.Turn{Game: g}
 
 		for _, player := range g.Players {
 			if !player.Alive {
@@ -70,18 +72,18 @@ func (g *Game) Run() {
 			}
 
 			// Send state to the player
-			data := g.StateForPlayer(player.Idx)
-			resp := g.runner.ToPlayer(player.Name, fmt.Sprintf("TURN %d", turnNumber), data)
+			data := StateForPlayer(g, player.Idx)
+			resp := g.Runner.ToPlayer(player.Name, fmt.Sprintf("TURN %d", turnNumber), data)
 			if resp != libproboj.Ok {
-				g.runner.Log(fmt.Sprintf("Player %s refused to listen to me :cry:", player.Name))
+				g.Runner.Log(fmt.Sprintf("Player %s refused to listen to me :cry:", player.Name))
 				player.Kill(g)
 				continue
 			}
 
 			// Read player's response
-			resp, turnData := g.runner.ReadPlayer(player.Name)
+			resp, turnData := g.Runner.ReadPlayer(player.Name)
 			if resp != libproboj.Ok {
-				g.runner.Log(fmt.Sprintf("Player %s was unable to provide any turn data.", player.Name))
+				g.Runner.Log(fmt.Sprintf("Player %s was unable to provide any turn data.", player.Name))
 				player.Kill(g)
 				continue
 			}
@@ -92,7 +94,7 @@ func (g *Game) Run() {
 				ok := turnScanner.Scan()
 				if !ok {
 					// No more lines available
-					g.runner.Log(fmt.Sprintf("Player %s ended his turn data prematurely.", player.Name))
+					g.Runner.Log(fmt.Sprintf("Player %s ended his turn data prematurely.", player.Name))
 					player.Kill(g)
 					break
 				}
@@ -101,7 +103,7 @@ func (g *Game) Run() {
 				ok = actions.ExecuteAction(g, lemur, cmd)
 				if !ok {
 					// Invalid command or response format
-					g.runner.Log(fmt.Sprintf("Player %s did not provide a meaningful command: '%s'.", player.Name, cmd))
+					g.Runner.Log(fmt.Sprintf("Player %s did not provide a meaningful command: '%s'.", player.Name, cmd))
 					player.Kill(g)
 					break
 				}
@@ -109,13 +111,13 @@ func (g *Game) Run() {
 		}
 
 		// Settle the turn
-		g.Turn.Settle()
+		turn.Settle(&g.Turn)
 
 		g.World.UpdateVisibility(g)
-		g.World.UpdateLight(g)
+		light.UpdateLight(g)
 		g.World.Tick()
 		for _, lemur := range g.Lemurs() {
-			lemur.Tick(g)
+			g.TickLemur(lemur)
 		}
 
 		// TODO: Observer

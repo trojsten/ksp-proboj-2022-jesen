@@ -1,13 +1,12 @@
 package actions
 
 import (
-	"ksp.sk/proboj/73/game"
+	"ksp.sk/proboj/73/game/structs"
 	"ksp.sk/proboj/73/game/tiles"
-	"ksp.sk/proboj/73/game/turn"
 )
 
-func Build(g *game.Game, lemur *game.Lemur, args []int) {
-	c := game.Coordinate{X: args[0], Y: args[1]}
+func Build(g *structs.Game, lemur *structs.Lemur, args []int) {
+	c := structs.Coordinate{X: args[0], Y: args[1]}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
 		return
 	}
@@ -17,20 +16,20 @@ func Build(g *game.Game, lemur *game.Lemur, args []int) {
 		return
 	}
 
-	g.Turn.TileChanges = append(g.Turn.TileChanges, turn.TileChange{
+	g.Turn.TileChanges = append(g.Turn.TileChanges, structs.TileChange{
 		Lemur: lemur,
 		Where: c,
 		To:    tile,
 	})
 }
 
-func Break(g *game.Game, lemur *game.Lemur, args []int) {
-	c := game.Coordinate{X: args[0], Y: args[1]}
+func Break(g *structs.Game, lemur *structs.Lemur, args []int) {
+	c := structs.Coordinate{X: args[0], Y: args[1]}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
 		return
 	}
 
-	g.Turn.TileChanges = append(g.Turn.TileChanges, turn.TileChange{
+	g.Turn.TileChanges = append(g.Turn.TileChanges, structs.TileChange{
 		Lemur: lemur,
 		Where: c,
 		To:    tiles.Empty,

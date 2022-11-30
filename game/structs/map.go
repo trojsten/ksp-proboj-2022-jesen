@@ -1,4 +1,4 @@
-package game
+package structs
 
 import (
 	"image/png"

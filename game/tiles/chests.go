@@ -2,7 +2,6 @@ package tiles
 
 import (
 	"fmt"
-	"ksp.sk/proboj/73/game"
 	"ksp.sk/proboj/73/game/inventory"
 )
 
@@ -83,14 +82,6 @@ func (t *ChestTile) CountItem(slot inventory.InventorySlot) int {
 		return t.Stone
 	}
 	return 0
-}
-
-func ChestAt(g game.Game, coord game.Coordinate) *ChestTile {
-	chest, isChest := g.World.Tiles[coord.Y][coord.X].(*ChestTile)
-	if !isChest {
-		return nil
-	}
-	return chest
 }
 
 func NewChest() *ChestTile {
