@@ -1,13 +1,12 @@
-package turn
+package structs
 
 import (
-	"ksp.sk/proboj/73/game"
 	"ksp.sk/proboj/73/game/inventory"
 	"ksp.sk/proboj/73/game/tiles"
 )
 
 type Turn struct {
-	Game            *game.Game
+	Game            *Game
 	Movements       []Movement
 	TileChanges     []TileChange
 	InventoryMoves  []InventoryMove
@@ -16,27 +15,19 @@ type Turn struct {
 	Stabs           []Stab
 }
 
-func (t *Turn) Settle() {
-	t.SettleCombat()
-	t.SettleInventories()
-	t.SettleBuilding()
-	t.SettleMovements()
-	// TODO: Settle deaths
-}
-
 type Movement struct {
-	Lemur *game.Lemur
-	From  game.Coordinate
-	To    game.Coordinate
+	Lemur *Lemur
+	From  Coordinate
+	To    Coordinate
 }
 
 type MirrorTeleport struct {
-	Lemur *game.Lemur
+	Lemur *Lemur
 }
 
 type TileChange struct {
-	Lemur *game.Lemur
-	Where game.Coordinate
+	Lemur *Lemur
+	Where Coordinate
 	To    tiles.TileType
 }
 
@@ -48,11 +39,11 @@ type InventoryMove struct {
 }
 
 type Craft struct {
-	Lemur *game.Lemur
-	Tool  game.Tool
+	Lemur *Lemur
+	Tool  Tool
 }
 
 type Stab struct {
-	Attacker *game.Lemur
-	Target   *game.Lemur
+	Attacker *Lemur
+	Target   *Lemur
 }

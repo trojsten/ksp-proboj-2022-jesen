@@ -1,14 +1,13 @@
 package actions
 
 import (
-	"ksp.sk/proboj/73/game"
-	"ksp.sk/proboj/73/game/turn"
+	"ksp.sk/proboj/73/game/structs"
 )
 
-func Craft(g *game.Game, lemur *game.Lemur, args []int) {
-	tool := game.Tool(args[0])
+func Craft(g *structs.Game, lemur *structs.Lemur, args []int) {
+	tool := structs.Tool(args[0])
 
-	g.Turn.Crafts = append(g.Turn.Crafts, turn.Craft{
+	g.Turn.Crafts = append(g.Turn.Crafts, structs.Craft{
 		Lemur: lemur,
 		Tool:  tool,
 	})

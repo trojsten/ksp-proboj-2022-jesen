@@ -1,43 +1,17 @@
-package game
+package structs
 
 import (
+	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/tiles"
-	"ksp.sk/proboj/73/game/turn"
 	"ksp.sk/proboj/73/libproboj"
 )
 
 type Game struct {
-	runner  libproboj.Runner
+	Runner  libproboj.Runner
 	World   World
-	Turn    turn.Turn
+	Turn    Turn
 	Players []*Player
 }
-
-type Coordinate struct {
-	X int
-	Y int
-}
-
-type Player struct {
-	Idx         int
-	Name        string
-	Color       string
-	DisplayName string
-	Alive       bool
-	Lemurs      []*Lemur
-}
-
-type Tool int
-
-const (
-	Lantern Tool = iota
-	Pickaxe
-	Hammer
-	Knife
-	Mirror
-	Gun
-	NoTool
-)
 
 func (g *Game) LemurAt(coord Coordinate) *Lemur {
 	for _, lemur := range g.Lemurs() {
@@ -69,14 +43,8 @@ func (g *Game) IsRunning() bool {
 	return playersAlive > 1
 }
 
-func (p *Player) Kill(g *Game) {
-	// TODO: score
-	p.Alive = false
-	g.runner.KillPlayer(p.Name)
-}
-
 func (g *Game) Lemurs() []*Lemur {
-	lemurs := []*Lemur{}
+	lemurList := []*Lemur{}
 
 	for _, player := range g.Players {
 		if !player.Alive {
@@ -86,11 +54,11 @@ func (g *Game) Lemurs() []*Lemur {
 			if !lemur.Alive {
 				continue
 			}
-			lemurs = append(lemurs, lemur)
+			lemurList = append(lemurList, lemur)
 		}
 	}
 
-	return lemurs
+	return lemurList
 }
 
 // GetSpawnpoint finds the first empty spawnpoint for a given player
@@ -117,4 +85,20 @@ func (g *Game) GetSpawnpoint(player int) (Coordinate, bool) {
 
 func (g *Game) KillLemur(lemur *Lemur) {
 	lemur.Alive = false
+}
+
+func (g *Game) TickLemur(l *Lemur) {
+	if !l.Alive {
+		return
+	}
+
+	if g.World.Light[l.Position.Y][l.Position.X] <= 0 {
+		// The lemur is standing in the dark
+		l.TimeInDark++
+		if l.TimeInDark >= constants.MaxTimeInDark {
+			l.Alive = false
+		}
+	} else {
+		l.TimeInDark = 0
+	}
 }

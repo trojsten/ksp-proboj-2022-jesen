@@ -1,5 +1,7 @@
 package actions
 
-import "ksp.sk/proboj/73/game"
+import (
+	"ksp.sk/proboj/73/game/structs"
+)
 
-func Noop(g *game.Game, lemur *game.Lemur, args []int) {}
+func Noop(g *structs.Game, lemur *structs.Lemur, args []int) {}

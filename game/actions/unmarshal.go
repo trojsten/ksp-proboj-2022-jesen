@@ -1,12 +1,12 @@
 package actions
 
 import (
-	"ksp.sk/proboj/73/game"
+	"ksp.sk/proboj/73/game/structs"
 	"strconv"
 	"strings"
 )
 
-func ExecuteAction(game *game.Game, lemur *game.Lemur, command string) bool {
+func ExecuteAction(game *structs.Game, lemur *structs.Lemur, command string) bool {
 	parts := strings.Split(command, " ")
 	commandName := parts[0]
 

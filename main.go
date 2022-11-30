@@ -17,5 +17,5 @@ func main() {
 	runner.Log(fmt.Sprintf("starting with seed %d", seed))
 
 	g := game.New(runner)
-	g.Run()
+	game.Run(&g)
 }

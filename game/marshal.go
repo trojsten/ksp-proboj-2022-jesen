@@ -2,12 +2,13 @@ package game
 
 import (
 	"fmt"
+	"ksp.sk/proboj/73/game/structs"
 	"ksp.sk/proboj/73/game/tiles"
 	"strconv"
 	"strings"
 )
 
-func (g *Game) StateForPlayer(player int) string {
+func StateForPlayer(g *structs.Game, player int) string {
 	b := strings.Builder{}
 
 	// Section 1 - WORLD

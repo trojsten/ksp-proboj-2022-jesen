@@ -1,10 +1,11 @@
 package turn
 
 import (
-	"ksp.sk/proboj/73/game/constants"
+	"ksp.sk/proboj/73/game/constants/crafting"
+	"ksp.sk/proboj/73/game/structs"
 )
 
-func (t *Turn) SettleInventories() {
+func SettleInventories(t *structs.Turn) {
 	// Remove items from inventories
 	for i, move := range t.InventoryMoves {
 		if move.From == nil {
@@ -30,7 +31,7 @@ func (t *Turn) SettleInventories() {
 	// Craft items
 	for _, craft := range t.Crafts {
 		lemur := craft.Lemur
-		recipe, ok := constants.Recipes[craft.Tool]
+		recipe, ok := crafting.Recipes[craft.Tool]
 		if !ok {
 			continue
 		}

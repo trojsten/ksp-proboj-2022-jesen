@@ -1,8 +1,7 @@
-package game
+package structs
 
 import (
 	"fmt"
-	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/inventory"
 )
 
@@ -132,20 +131,4 @@ func SpawnLemur(p *Player, g *Game) error {
 		Tools:    [2]Tool{Pickaxe, NoTool},
 	})
 	return nil
-}
-
-func (l *Lemur) Tick(g *Game) {
-	if !l.Alive {
-		return
-	}
-
-	if g.World.Light[l.Position.Y][l.Position.X] <= 0 {
-		// The lemur is standing in the dark
-		l.TimeInDark++
-		if l.TimeInDark >= constants.MaxTimeInDark {
-			l.Alive = false
-		}
-	} else {
-		l.TimeInDark = 0
-	}
 }

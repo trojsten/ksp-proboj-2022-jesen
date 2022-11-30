@@ -1,20 +1,20 @@
 package turn
 
 import (
-	"ksp.sk/proboj/73/game"
 	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/inventory"
+	"ksp.sk/proboj/73/game/structs"
 	"ksp.sk/proboj/73/game/tiles"
 )
 
-func (t *Turn) SettleBuilding() {
+func SettleBuilding(t *structs.Turn) {
 	// First, place new tiles
 	for _, change := range t.TileChanges {
 		if t.Game.World.Tiles[change.Where.Y][change.Where.X].Type() != tiles.Empty {
 			continue
 		}
 
-		if !change.Lemur.HasTool(game.Hammer) {
+		if !change.Lemur.HasTool(structs.Hammer) {
 			continue
 		}
 
@@ -53,9 +53,9 @@ func (t *Turn) SettleBuilding() {
 		}
 
 		tile := t.Game.World.Tiles[change.Where.Y][change.Where.X]
-		tool := game.Pickaxe
+		tool := structs.Pickaxe
 		if tile.Type() == tiles.Tree || tile.Type() == tiles.Furnace || tile.Type() == tiles.Trap || tile.Type() == tiles.Chest {
-			tool = game.Hammer
+			tool = structs.Hammer
 		}
 
 		if !change.Lemur.HasTool(tool) {
