@@ -13,10 +13,11 @@ type Turn struct {
 	InventoryMoves  []InventoryMove
 	MirrorTeleports []MirrorTeleport
 	Crafts          []Craft
+	Stabs           []Stab
 }
 
 func (t *Turn) Settle() {
-	// TODO: Settle combat
+	t.SettleCombat()
 	t.SettleInventories()
 	t.SettleBuilding()
 	t.SettleMovements()
@@ -49,4 +50,9 @@ type InventoryMove struct {
 type Craft struct {
 	Lemur *game.Lemur
 	Tool  game.Tool
+}
+
+type Stab struct {
+	Attacker *game.Lemur
+	Target   *game.Lemur
 }

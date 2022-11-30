@@ -106,3 +106,7 @@ func (g *Game) GetSpawnpoint(player int) (Coordinate, bool) {
 	}
 	return Coordinate{}, false
 }
+
+func (g *Game) KillLemur(lemur *Lemur) {
+	lemur.Alive = false
+}
