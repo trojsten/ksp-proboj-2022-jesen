@@ -6,11 +6,15 @@ import (
 )
 
 func Move(g *game.Game, lemur *game.Lemur, args []int) {
-	// TODO: Validate X, Y
+	c := game.Coordinate{X: args[0], Y: args[1]}
+	if !g.World.ValidCoordinate(c) || !lemur.CanReach(c) {
+		return
+	}
+
 	g.Turn.Movements = append(g.Turn.Movements, turn.Movement{
 		Lemur: lemur,
 		From:  lemur.Position,
-		To:    game.Coordinate{X: args[0], Y: args[1]},
+		To:    c,
 	})
 }
 
