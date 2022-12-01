@@ -18,10 +18,9 @@ class Command(enum.StrEnum):
 class Tool(enum.IntEnum):
     JUICER = 0
     PICKAXE = 1
-    HAMMER = 2
-    KNIFE = 3
-    GUN = 4
-    NO_TOOL = 5
+    KNIFE = 2
+    GUN = 3
+    NO_TOOL = 4
 
 
 class TileType(enum.IntEnum):

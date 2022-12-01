@@ -14,7 +14,7 @@ func SettleBuilding(t *structs.Turn) {
 			continue
 		}
 
-		if !change.Lemur.HasTool(structs.Hammer) {
+		if !change.Lemur.HasTool(structs.Pickaxe) {
 			continue
 		}
 
@@ -53,12 +53,8 @@ func SettleBuilding(t *structs.Turn) {
 		}
 
 		tile := t.Game.World.Tiles[change.Where.Y][change.Where.X]
-		tool := structs.Pickaxe
-		if tile.Type() == tiles.Tree || tile.Type() == tiles.Furnace || tile.Type() == tiles.Trap || tile.Type() == tiles.Chest {
-			tool = structs.Hammer
-		}
 
-		if !change.Lemur.HasTool(tool) {
+		if !change.Lemur.HasTool(structs.Pickaxe) {
 			continue
 		}
 
