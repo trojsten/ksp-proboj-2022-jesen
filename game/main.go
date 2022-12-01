@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"ksp.sk/proboj/73/game/actions"
-	"ksp.sk/proboj/73/game/light"
+	"ksp.sk/proboj/73/game/oxygen"
 	"ksp.sk/proboj/73/game/structs"
 	"ksp.sk/proboj/73/game/turn"
 	"ksp.sk/proboj/73/libproboj"
@@ -60,7 +60,7 @@ func GreetPlayers(g *structs.Game) {
 func Run(g *structs.Game) {
 	GreetPlayers(g)
 	g.World.UpdateVisibility(g)
-	light.UpdateLight(g)
+	oxygen.Update(g)
 
 	turnNumber := 0
 	for g.IsRunning() {
@@ -114,7 +114,7 @@ func Run(g *structs.Game) {
 		turn.Settle(&g.Turn)
 
 		g.World.UpdateVisibility(g)
-		light.UpdateLight(g)
+		oxygen.Update(g)
 		g.World.Tick()
 		for _, lemur := range g.Lemurs() {
 			g.TickLemur(lemur)

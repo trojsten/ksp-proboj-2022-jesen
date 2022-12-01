@@ -8,9 +8,10 @@ const (
 
 	TreeGrowthRate       = 10
 	FurnaceLightDuration = 10
+	JuicerOxygenDuration = 10
 
 	FurnaceLightLevel = 15
-	LanternLightLevel = 10
+	JuicerOxygenLevel = 10
 
 	MaxTimeInDark = 4
 )

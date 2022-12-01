@@ -16,7 +16,7 @@ class Command(enum.StrEnum):
 
 
 class Tool(enum.IntEnum):
-    LANTERN = 0
+    JUICER = 0
     PICKAXE = 1
     HAMMER = 2
     KNIFE = 3

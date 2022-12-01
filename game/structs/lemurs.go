@@ -6,16 +6,16 @@ import (
 )
 
 type Lemur struct {
-	Player      int
-	Position    Coordinate
-	Alive       bool
-	Tools       [2]Tool
-	Cocos       int
-	Coal        int
-	Stone       int
-	Gold        int
-	LanternTime int
-	TimeInDark  int
+	Player     int
+	Position   Coordinate
+	Alive      bool
+	Tools      [2]Tool
+	Cocos      int
+	Coal       int
+	Stone      int
+	Gold       int
+	JuicerTime int
+	TimeInDark int
 }
 
 func (l *Lemur) AddItem(slot inventory.InventorySlot, quantity int) {

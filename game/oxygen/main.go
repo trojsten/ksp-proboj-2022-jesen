@@ -1,4 +1,4 @@
-package light
+package oxygen
 
 import (
 	"ksp.sk/proboj/73/game/constants"
@@ -50,7 +50,7 @@ func lightFrom(w *structs.World, c structs.Coordinate, level int) {
 	}
 }
 
-func UpdateLight(g *structs.Game) {
+func Update(g *structs.Game) {
 	w := &g.World
 	furnaces := []structs.Coordinate{}
 
@@ -73,21 +73,21 @@ func UpdateLight(g *structs.Game) {
 	}
 
 	for _, lemur := range g.Lemurs() {
-		if lemur.LanternTime > 0 {
-			// Lemur has turned on lantern
-			if lemur.HasTool(structs.Lantern) {
-				lemur.LanternTime--
-				lightFrom(w, lemur.Position, constants.LanternLightLevel)
+		if lemur.JuicerTime > 0 {
+			// Lemur has turned on juicer
+			if lemur.HasTool(structs.Juicer) {
+				lemur.JuicerTime--
+				lightFrom(w, lemur.Position, constants.JuicerOxygenLevel)
 			} else {
-				lemur.LanternTime = 0
+				lemur.JuicerTime = 0
 			}
 		} else {
-			// Lemur does not have a turned on lantern
-			if lemur.HasTool(structs.Lantern) && lemur.CountItem(inventory.Coal) > 0 && w.Light[lemur.Position.Y][lemur.Position.X] <= 0 {
-				// But he has a lantern and some coal
+			// Lemur does not have a turned on juicer
+			if lemur.HasTool(structs.Juicer) && lemur.CountItem(inventory.Coal) > 0 && w.Light[lemur.Position.Y][lemur.Position.X] <= 0 {
+				// But he has a juicer and some coal
 				lemur.RemoveItem(inventory.Coal, 1)
-				lemur.LanternTime = constants.FurnaceLightDuration
-				lightFrom(w, lemur.Position, constants.LanternLightLevel)
+				lemur.JuicerTime = constants.JuicerOxygenDuration
+				lightFrom(w, lemur.Position, constants.JuicerOxygenLevel)
 			}
 		}
 	}
