@@ -35,10 +35,6 @@ func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 
 	var target inventory.Inventory = g.LemurAt(coords)
 
-	// Tools cannot be stored in chests
-	if target == nil && slot != inventory.Tool1 && slot != inventory.Tool2 {
-		target = locate.ChestAt(*g, coords)
-	}
 	// Lemon can be put into furnace
 	if target == nil && slot == inventory.Lemon {
 		target = locate.FurnaceAt(*g, coords)
@@ -65,23 +61,17 @@ func Take(g *structs.Game, lemur *structs.Lemur, args []int) {
 	slot := inventory.InventorySlot(args[2])
 	quantity := args[3]
 
-	// Tools can't be taken from chests
-	if slot == inventory.Tool1 || slot == inventory.Tool2 {
+	if slot != inventory.Lemon {
 		return
 	}
 
-	var chest inventory.Inventory = locate.ChestAt(*g, c)
-
-	// Lemon can be taken from trees
-	if chest == nil && slot == inventory.Lemon {
-		chest = locate.TreeAt(*g, c)
-	}
-	if chest == nil {
+	var tree inventory.Inventory = locate.TreeAt(*g, c)
+	if tree == nil {
 		return
 	}
 
 	g.Turn.InventoryMoves = append(g.Turn.InventoryMoves, structs.InventoryMove{
-		From:     chest,
+		From:     tree,
 		To:       lemur,
 		Slot:     slot,
 		Quantity: quantity,
