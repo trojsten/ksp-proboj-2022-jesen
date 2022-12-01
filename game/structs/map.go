@@ -13,9 +13,6 @@ func randStoneTile() tiles.BasicTile {
 	if r < 80 {
 		return tiles.NewBasic(tiles.Stone)
 	}
-	if r < 95 {
-		return tiles.NewBasic(tiles.Coal)
-	}
 	return tiles.NewBasic(tiles.Gold)
 }
 

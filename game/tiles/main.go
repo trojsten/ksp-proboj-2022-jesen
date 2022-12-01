@@ -6,7 +6,6 @@ const (
 	Empty TileType = iota
 	Stone
 	Gold
-	Coal
 	Tree
 	Furnace
 	Trap

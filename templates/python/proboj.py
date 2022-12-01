@@ -27,12 +27,11 @@ class TileType(enum.IntEnum):
     EMPTY = 0
     STONE = 1
     GOLD = 2
-    COAL = 3
-    TREE = 4
-    FURNACE = 5
-    TRAP = 6
-    CHEST = 7
-    UNKNOWN = 8
+    TREE = 3
+    FURNACE = 4
+    TRAP = 5
+    CHEST = 6
+    UNKNOWN = 7
 
 
 class Tile:
@@ -52,18 +51,18 @@ class Tile:
 
 
 class ChestTile(Tile):
-    def __init__(self, cocos: int, gold: int, coal: int, stone: int):
+    def __init__(self, cocos: int, gold: int, lemon: int, stone: int):
         super().__init__(TileType.CHEST)
         self.cocos = cocos
         self.gold = gold
-        self.coal = coal
+        self.lemon = lemon
         self.stone = stone
 
 
 class FurnaceTile(Tile):
-    def __init__(self, coal: int):
+    def __init__(self, lemon: int):
         super().__init__(TileType.FURNACE)
-        self.coal = coal
+        self.lemon = lemon
 
 
 class TreeTile(Tile):
@@ -109,7 +108,7 @@ class Lemur:
         self.y: int = 0
         self.cocos: int = 0
         self.gold: int = 0
-        self.coal: int = 0
+        self.lemon: int = 0
         self.stone: int = 0
         self.tools: list[Tool | None] = []
 
@@ -124,7 +123,7 @@ class Lemur:
         self.y = data[2]
         self.cocos = data[3]
         self.gold = data[4]
-        self.coal = data[5]
+        self.lemon = data[5]
         self.stone = data[6]
         self.tools = []
         for t in data[7:]:

@@ -11,7 +11,7 @@ type Lemur struct {
 	Alive      bool
 	Tools      [2]Tool
 	Cocos      int
-	Coal       int
+	Lemon      int
 	Stone      int
 	Gold       int
 	JuicerTime int
@@ -24,8 +24,8 @@ func (l *Lemur) AddItem(slot inventory.InventorySlot, quantity int) {
 		l.Cocos += quantity
 	case inventory.Gold:
 		l.Gold += quantity
-	case inventory.Coal:
-		l.Coal += quantity
+	case inventory.Lemon:
+		l.Lemon += quantity
 	case inventory.Stone:
 		l.Stone += quantity
 	}
@@ -45,11 +45,11 @@ func (l *Lemur) RemoveItem(slot inventory.InventorySlot, quantity int) {
 		} else {
 			l.Gold -= quantity
 		}
-	case inventory.Coal:
-		if l.Coal < quantity {
-			l.Coal = 0
+	case inventory.Lemon:
+		if l.Lemon < quantity {
+			l.Lemon = 0
 		} else {
-			l.Coal -= quantity
+			l.Lemon -= quantity
 		}
 	case inventory.Stone:
 		if l.Stone < quantity {
@@ -70,8 +70,8 @@ func (l *Lemur) CountItem(slot inventory.InventorySlot) int {
 		return l.Cocos
 	case inventory.Gold:
 		return l.Gold
-	case inventory.Coal:
-		return l.Coal
+	case inventory.Lemon:
+		return l.Lemon
 	case inventory.Stone:
 		return l.Stone
 	case inventory.Tool1:

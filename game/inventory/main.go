@@ -4,7 +4,7 @@ type InventorySlot int
 
 const (
 	Cocos InventorySlot = iota
-	Coal
+	Lemon
 	Stone
 	Gold
 	Tool1

@@ -83,9 +83,9 @@ func Update(g *structs.Game) {
 			}
 		} else {
 			// Lemur does not have a turned on juicer
-			if lemur.HasTool(structs.Juicer) && lemur.CountItem(inventory.Coal) > 0 && w.Light[lemur.Position.Y][lemur.Position.X] <= 0 {
-				// But he has a juicer and some coal
-				lemur.RemoveItem(inventory.Coal, 1)
+			if lemur.HasTool(structs.Juicer) && lemur.CountItem(inventory.Lemon) > 0 && w.Light[lemur.Position.Y][lemur.Position.X] <= 0 {
+				// But he has a juicer and some lemons
+				lemur.RemoveItem(inventory.Lemon, 1)
 				lemur.JuicerTime = constants.JuicerOxygenDuration
 				lightFrom(w, lemur.Position, constants.JuicerOxygenLevel)
 			}

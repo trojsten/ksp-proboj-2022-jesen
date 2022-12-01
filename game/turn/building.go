@@ -26,10 +26,10 @@ func SettleBuilding(t *structs.Turn) {
 			change.Lemur.RemoveItem(inventory.Gold, constants.FurnaceCost)
 			t.Game.World.Tiles[change.Where.Y][change.Where.X] = tiles.NewFurnace()
 		case tiles.Chest:
-			if change.Lemur.CountItem(inventory.Coal) < constants.ChestCost {
+			if change.Lemur.CountItem(inventory.Lemon) < constants.ChestCost {
 				continue
 			}
-			change.Lemur.RemoveItem(inventory.Coal, constants.ChestCost)
+			change.Lemur.RemoveItem(inventory.Lemon, constants.ChestCost)
 			t.Game.World.Tiles[change.Where.Y][change.Where.X] = tiles.NewChest()
 		case tiles.Tree:
 			if change.Lemur.CountItem(inventory.Cocos) < constants.TreeCost {
@@ -61,8 +61,6 @@ func SettleBuilding(t *structs.Turn) {
 		switch tile.Type() {
 		case tiles.Stone:
 			change.Lemur.AddItem(inventory.Stone, 1)
-		case tiles.Coal:
-			change.Lemur.AddItem(inventory.Coal, 1)
 		case tiles.Gold:
 			change.Lemur.AddItem(inventory.Gold, 1)
 		case tiles.Tree:
@@ -70,7 +68,7 @@ func SettleBuilding(t *structs.Turn) {
 		case tiles.Trap:
 			change.Lemur.AddItem(inventory.Stone, constants.TrapCost)
 		case tiles.Chest:
-			change.Lemur.AddItem(inventory.Coal, constants.ChestCost)
+			change.Lemur.AddItem(inventory.Lemon, constants.ChestCost)
 		case tiles.Furnace:
 			change.Lemur.AddItem(inventory.Gold, constants.FurnaceCost)
 		}
