@@ -7,7 +7,7 @@ const (
 	Stone
 	Iron
 	Tree
-	Furnace
+	Turbine
 	Trap
 	Unknown
 )

@@ -12,7 +12,7 @@ func Build(g *structs.Game, lemur *structs.Lemur, args []int) {
 	}
 
 	tile := tiles.TileType(args[2])
-	if tile != tiles.Furnace && tile != tiles.Trap && tile != tiles.Tree {
+	if tile != tiles.Turbine && tile != tiles.Trap && tile != tiles.Tree {
 		return
 	}
 

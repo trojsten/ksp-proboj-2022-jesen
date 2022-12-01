@@ -28,7 +28,7 @@ class TileType(enum.IntEnum):
     STONE = 1
     IRON = 2
     TREE = 3
-    FURNACE = 4
+    TURBINE = 4
     TRAP = 5
     UNKNOWN = 6
 
@@ -40,22 +40,22 @@ class Tile:
     @classmethod
     def from_state(cls, state: list[int]) -> "Tile":
         typ = TileType(state.pop(0))
-        if typ == TileType.FURNACE:
-            return FurnaceTile(state.pop(0))
+        if typ == TileType.TURBINE:
+            return TurbineTile(state.pop(0))
         if typ == TileType.TREE:
             return TreeTile(bool(state.pop(0)))
         return Tile(typ)
 
 
-class FurnaceTile(Tile):
+class TurbineTile(Tile):
     def __init__(self, lemon: int):
-        super().__init__(TileType.FURNACE)
+        super().__init__(TileType.TURBINE)
         self.lemon = lemon
 
 
 class TreeTile(Tile):
     def __init__(self, lemon: bool):
-        super().__init__(TileType.FURNACE)
+        super().__init__(TileType.TURBINE)
         self.has_lemon = lemon
 
 

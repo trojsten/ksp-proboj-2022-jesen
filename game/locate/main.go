@@ -13,8 +13,8 @@ func TreeAt(g structs.Game, coord structs.Coordinate) *tiles.TreeTile {
 	return tile
 }
 
-func FurnaceAt(g structs.Game, coord structs.Coordinate) *tiles.FurnaceTile {
-	tile, ok := g.World.Tiles[coord.Y][coord.X].(*tiles.FurnaceTile)
+func TurbineAt(g structs.Game, coord structs.Coordinate) *tiles.TurbineTile {
+	tile, ok := g.World.Tiles[coord.Y][coord.X].(*tiles.TurbineTile)
 	if !ok {
 		return nil
 	}

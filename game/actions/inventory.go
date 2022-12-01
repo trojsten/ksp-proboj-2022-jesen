@@ -35,9 +35,9 @@ func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 
 	var target inventory.Inventory = g.LemurAt(coords)
 
-	// Lemon can be put into furnace
+	// Lemon can be put into turbines
 	if target == nil && slot == inventory.Lemon {
-		target = locate.FurnaceAt(*g, coords)
+		target = locate.TurbineAt(*g, coords)
 	}
 	if target == nil {
 		return
