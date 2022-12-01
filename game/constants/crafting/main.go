@@ -10,7 +10,6 @@ var Recipes = map[structs.Tool]Recipe{
 	structs.Pickaxe: {Stone: 1, Coal: 1},
 	structs.Hammer:  {Cocos: 1, Stone: 1},
 	structs.Knife:   {Gold: 1, Stone: 1},
-	structs.Mirror:  {Gold: 1, Coal: 1},
 	structs.Gun:     {Gold: 1, Cocos: 1},
 }
 

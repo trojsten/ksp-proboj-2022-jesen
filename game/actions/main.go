@@ -30,8 +30,6 @@ func Get(action string) ActionHandler {
 
 	case "MOVE":
 		return Move
-	case "MIRROR":
-		return Mirror
 	}
 
 	return Noop

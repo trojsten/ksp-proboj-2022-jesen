@@ -16,7 +16,3 @@ func Move(g *structs.Game, lemur *structs.Lemur, args []int) {
 		To:    c,
 	})
 }
-
-func Mirror(g *structs.Game, lemur *structs.Lemur, args []int) {
-	g.Turn.MirrorTeleports = append(g.Turn.MirrorTeleports, structs.MirrorTeleport{Lemur: lemur})
-}

@@ -7,7 +7,6 @@ const (
 	Pickaxe
 	Hammer
 	Knife
-	Mirror
 	Gun
 	NoTool
 )

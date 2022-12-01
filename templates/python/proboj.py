@@ -13,7 +13,6 @@ class Command(enum.StrEnum):
     TAKE = "TAKE"
     CRAFT = "CRAFT"
     MOVE = "MOVE"
-    MIRROR = "MIRROR"
 
 
 class Tool(enum.IntEnum):
@@ -21,9 +20,8 @@ class Tool(enum.IntEnum):
     PICKAXE = 1
     HAMMER = 2
     KNIFE = 3
-    MIRROR = 4
-    GUN = 5
-    NO_TOOL = 6
+    GUN = 4
+    NO_TOOL = 5
 
 
 class TileType(enum.IntEnum):
