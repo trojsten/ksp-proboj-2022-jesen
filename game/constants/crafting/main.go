@@ -6,10 +6,10 @@ import (
 )
 
 var Recipes = map[structs.Tool]Recipe{
-	structs.Juicer:  {Lemon: 1},
-	structs.Pickaxe: {Stone: 1, Lemon: 1},
-	structs.Knife:   {Gold: 1, Stone: 1},
-	structs.Gun:     {Gold: 1},
+	structs.Juicer:  {Stone: 3},
+	structs.Pickaxe: {Stone: 2},
+	structs.Knife:   {Gold: 1},
+	structs.Gun:     {Gold: 5},
 }
 
 type Recipe struct {
