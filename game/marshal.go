@@ -35,7 +35,7 @@ func StateForPlayer(g *structs.Game, player int) string {
 				for _, tool := range lemur.Tools {
 					tools = append(tools, strconv.Itoa(int(tool)))
 				}
-				b.WriteString(fmt.Sprintf("1 %d %d %d %d %d %s\n", lemur.Position.X, lemur.Position.Y, lemur.Gold, lemur.Lemon, lemur.Stone, strings.Join(tools, " ")))
+				b.WriteString(fmt.Sprintf("1 %d %d %d %d %d %s\n", lemur.Position.X, lemur.Position.Y, lemur.Iron, lemur.Lemon, lemur.Stone, strings.Join(tools, " ")))
 			} else {
 				b.WriteString("0\n")
 			}

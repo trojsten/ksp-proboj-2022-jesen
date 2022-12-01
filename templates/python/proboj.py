@@ -26,7 +26,7 @@ class Tool(enum.IntEnum):
 class TileType(enum.IntEnum):
     EMPTY = 0
     STONE = 1
-    GOLD = 2
+    IRON = 2
     TREE = 3
     FURNACE = 4
     TRAP = 5
@@ -94,7 +94,7 @@ class Lemur:
         self.alive: bool = True
         self.x: int = 0
         self.y: int = 0
-        self.gold: int = 0
+        self.iron: int = 0
         self.lemon: int = 0
         self.stone: int = 0
         self.tools: list[Tool | None] = []
@@ -108,7 +108,7 @@ class Lemur:
         self.alive = True
         self.x = data[1]
         self.y = data[2]
-        self.gold = data[3]
+        self.iron = data[3]
         self.lemon = data[4]
         self.stone = data[5]
         self.tools = []

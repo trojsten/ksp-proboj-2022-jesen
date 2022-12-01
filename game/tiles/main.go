@@ -5,7 +5,7 @@ type TileType int
 const (
 	Empty TileType = iota
 	Stone
-	Gold
+	Iron
 	Tree
 	Furnace
 	Trap

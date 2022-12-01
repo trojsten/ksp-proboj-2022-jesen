@@ -12,15 +12,15 @@ type Lemur struct {
 	Tools      [2]Tool
 	Lemon      int
 	Stone      int
-	Gold       int
+	Iron       int
 	JuicerTime int
 	TimeInDark int
 }
 
 func (l *Lemur) AddItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
-	case inventory.Gold:
-		l.Gold += quantity
+	case inventory.Iron:
+		l.Iron += quantity
 	case inventory.Lemon:
 		l.Lemon += quantity
 	case inventory.Stone:
@@ -30,11 +30,11 @@ func (l *Lemur) AddItem(slot inventory.InventorySlot, quantity int) {
 
 func (l *Lemur) RemoveItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
-	case inventory.Gold:
-		if l.Gold < quantity {
-			l.Gold = 0
+	case inventory.Iron:
+		if l.Iron < quantity {
+			l.Iron = 0
 		} else {
-			l.Gold -= quantity
+			l.Iron -= quantity
 		}
 	case inventory.Lemon:
 		if l.Lemon < quantity {
@@ -57,8 +57,8 @@ func (l *Lemur) RemoveItem(slot inventory.InventorySlot, quantity int) {
 
 func (l *Lemur) CountItem(slot inventory.InventorySlot) int {
 	switch slot {
-	case inventory.Gold:
-		return l.Gold
+	case inventory.Iron:
+		return l.Iron
 	case inventory.Lemon:
 		return l.Lemon
 	case inventory.Stone:

@@ -13,7 +13,7 @@ func randStoneTile() tiles.BasicTile {
 	if r < 80 {
 		return tiles.NewBasic(tiles.Stone)
 	}
-	return tiles.NewBasic(tiles.Gold)
+	return tiles.NewBasic(tiles.Iron)
 }
 
 func (w *World) LoadMap(filename string) error {

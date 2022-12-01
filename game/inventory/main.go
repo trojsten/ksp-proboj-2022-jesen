@@ -5,7 +5,7 @@ type InventorySlot int
 const (
 	Lemon InventorySlot = iota
 	Stone
-	Gold
+	Iron
 	Tool1
 	Tool2
 )
