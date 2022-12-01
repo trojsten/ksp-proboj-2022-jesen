@@ -10,7 +10,6 @@ type Lemur struct {
 	Position   Coordinate
 	Alive      bool
 	Tools      [2]Tool
-	Cocos      int
 	Lemon      int
 	Stone      int
 	Gold       int
@@ -20,8 +19,6 @@ type Lemur struct {
 
 func (l *Lemur) AddItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
-	case inventory.Cocos:
-		l.Cocos += quantity
 	case inventory.Gold:
 		l.Gold += quantity
 	case inventory.Lemon:
@@ -33,12 +30,6 @@ func (l *Lemur) AddItem(slot inventory.InventorySlot, quantity int) {
 
 func (l *Lemur) RemoveItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
-	case inventory.Cocos:
-		if l.Cocos < quantity {
-			l.Cocos = 0
-		} else {
-			l.Cocos -= quantity
-		}
 	case inventory.Gold:
 		if l.Gold < quantity {
 			l.Gold = 0
@@ -66,8 +57,6 @@ func (l *Lemur) RemoveItem(slot inventory.InventorySlot, quantity int) {
 
 func (l *Lemur) CountItem(slot inventory.InventorySlot) int {
 	switch slot {
-	case inventory.Cocos:
-		return l.Cocos
 	case inventory.Gold:
 		return l.Gold
 	case inventory.Lemon:

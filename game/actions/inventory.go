@@ -72,8 +72,8 @@ func Take(g *structs.Game, lemur *structs.Lemur, args []int) {
 
 	var chest inventory.Inventory = locate.ChestAt(*g, c)
 
-	// Cocos can be taken from trees
-	if chest == nil && slot == inventory.Cocos {
+	// Lemon can be taken from trees
+	if chest == nil && slot == inventory.Lemon {
 		chest = locate.TreeAt(*g, c)
 	}
 	if chest == nil {

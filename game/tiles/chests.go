@@ -6,7 +6,6 @@ import (
 )
 
 type ChestTile struct {
-	Cocos int
 	Lemon int
 	Stone int
 	Gold  int
@@ -17,7 +16,7 @@ func (t *ChestTile) Type() TileType {
 }
 
 func (t *ChestTile) State() string {
-	return fmt.Sprintf("%d %d %d %d %d", Chest, t.Cocos, t.Gold, t.Lemon, t.Stone)
+	return fmt.Sprintf("%d %d %d %d", Chest, t.Gold, t.Lemon, t.Stone)
 }
 
 func (t *ChestTile) SeeThrough() bool {
@@ -30,8 +29,6 @@ func (t *ChestTile) Tick() {
 
 func (t *ChestTile) AddItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
-	case inventory.Cocos:
-		t.Cocos += quantity
 	case inventory.Gold:
 		t.Gold += quantity
 	case inventory.Lemon:
@@ -43,12 +40,6 @@ func (t *ChestTile) AddItem(slot inventory.InventorySlot, quantity int) {
 
 func (t *ChestTile) RemoveItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
-	case inventory.Cocos:
-		if t.Cocos < quantity {
-			t.Cocos = 0
-		} else {
-			t.Cocos -= quantity
-		}
 	case inventory.Gold:
 		if t.Gold < quantity {
 			t.Gold = 0
@@ -72,8 +63,6 @@ func (t *ChestTile) RemoveItem(slot inventory.InventorySlot, quantity int) {
 
 func (t *ChestTile) CountItem(slot inventory.InventorySlot) int {
 	switch slot {
-	case inventory.Cocos:
-		return t.Cocos
 	case inventory.Gold:
 		return t.Gold
 	case inventory.Lemon:

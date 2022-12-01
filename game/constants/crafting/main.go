@@ -6,24 +6,20 @@ import (
 )
 
 var Recipes = map[structs.Tool]Recipe{
-	structs.Juicer:  {Cocos: 1, Lemon: 1},
+	structs.Juicer:  {Lemon: 1},
 	structs.Pickaxe: {Stone: 1, Lemon: 1},
 	structs.Knife:   {Gold: 1, Stone: 1},
-	structs.Gun:     {Gold: 1, Cocos: 1},
+	structs.Gun:     {Gold: 1},
 }
 
 type Recipe struct {
 	Tool  structs.Tool
-	Cocos int
 	Lemon int
 	Stone int
 	Gold  int
 }
 
 func (r Recipe) CanCraft(inv inventory.Inventory) bool {
-	if inv.CountItem(inventory.Cocos) < r.Cocos {
-		return false
-	}
 	if inv.CountItem(inventory.Lemon) < r.Lemon {
 		return false
 	}
@@ -37,7 +33,6 @@ func (r Recipe) CanCraft(inv inventory.Inventory) bool {
 }
 
 func (r Recipe) Craft(lemur *structs.Lemur) {
-	lemur.RemoveItem(inventory.Cocos, r.Cocos)
 	lemur.RemoveItem(inventory.Lemon, r.Lemon)
 	lemur.RemoveItem(inventory.Stone, r.Stone)
 	lemur.RemoveItem(inventory.Gold, r.Gold)

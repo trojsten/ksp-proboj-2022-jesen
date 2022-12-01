@@ -51,9 +51,8 @@ class Tile:
 
 
 class ChestTile(Tile):
-    def __init__(self, cocos: int, gold: int, lemon: int, stone: int):
+    def __init__(self, gold: int, lemon: int, stone: int):
         super().__init__(TileType.CHEST)
-        self.cocos = cocos
         self.gold = gold
         self.lemon = lemon
         self.stone = stone
@@ -66,9 +65,9 @@ class FurnaceTile(Tile):
 
 
 class TreeTile(Tile):
-    def __init__(self, cocos: bool):
+    def __init__(self, lemon: bool):
         super().__init__(TileType.FURNACE)
-        self.has_cocos = cocos
+        self.has_lemon = lemon
 
 
 class World:
@@ -106,7 +105,6 @@ class Lemur:
         self.alive: bool = True
         self.x: int = 0
         self.y: int = 0
-        self.cocos: int = 0
         self.gold: int = 0
         self.lemon: int = 0
         self.stone: int = 0
@@ -121,12 +119,11 @@ class Lemur:
         self.alive = True
         self.x = data[1]
         self.y = data[2]
-        self.cocos = data[3]
-        self.gold = data[4]
-        self.lemon = data[5]
-        self.stone = data[6]
+        self.gold = data[3]
+        self.lemon = data[4]
+        self.stone = data[5]
         self.tools = []
-        for t in data[7:]:
+        for t in data[6:]:
             tool = Tool(t)
             if tool == Tool.NO_TOOL:
                 self.tools.append(None)

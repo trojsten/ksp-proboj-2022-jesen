@@ -52,7 +52,7 @@ func (w *World) LoadMap(filename string) error {
 			} else if red == 0 && green == 0xffff && blue == 0 {
 				// Green = tree
 				t := tiles.NewTree()
-				t.HasCocos = true
+				t.HasLemon = true
 				w.Tiles[y][x] = t
 			} else if red == 0xffff {
 				// Red-ish = spawn point, green -> player ID
