@@ -3,7 +3,7 @@ package constants
 const (
 	TurbineCost int = 1
 	TreeCost        = 1
-	TrapCost        = 1
+	WallCost        = 1
 
 	TreeGrowthRate        = 10
 	TurbineOxygenDuration = 10

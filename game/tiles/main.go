@@ -8,7 +8,7 @@ const (
 	Iron
 	Tree
 	Turbine
-	Trap
+	Wall
 	Unknown
 )
 

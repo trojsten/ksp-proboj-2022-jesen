@@ -29,7 +29,7 @@ class TileType(enum.IntEnum):
     IRON = 2
     TREE = 3
     TURBINE = 4
-    TRAP = 5
+    WALL = 5
     UNKNOWN = 6
 
 
