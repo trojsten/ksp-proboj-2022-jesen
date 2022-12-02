@@ -40,17 +40,4 @@ func SettleMovements(t *structs.Turn) {
 			}
 		}
 	}
-
-	for _, teleport := range t.MirrorTeleports {
-		if !teleport.Lemur.HasTool(structs.Mirror) {
-			continue
-		}
-
-		sp, ok := t.Game.GetSpawnpoint(teleport.Lemur.Player)
-		if !ok {
-			continue
-		}
-
-		teleport.Lemur.Position = sp
-	}
 }

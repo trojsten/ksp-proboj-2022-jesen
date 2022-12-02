@@ -7,6 +7,11 @@ import (
 )
 
 func ExecuteAction(game *structs.Game, lemur *structs.Lemur, command string) bool {
+	// Stunned lemurs can't do anything
+	if lemur.StunnedTime > 0 {
+		return true
+	}
+
 	parts := strings.Split(command, " ")
 	commandName := parts[0]
 

@@ -5,12 +5,10 @@ type TileType int
 const (
 	Empty TileType = iota
 	Stone
-	Gold
-	Coal
+	Iron
 	Tree
-	Furnace
-	Trap
-	Chest
+	Turbine
+	Wall
 	Unknown
 )
 
@@ -19,4 +17,15 @@ type Tile interface {
 	SeeThrough() bool
 	State() string
 	Tick()
+}
+
+func NewTile(tile TileType) Tile {
+	switch tile {
+	case Turbine:
+		return NewTurbine()
+	case Tree:
+		return NewTree()
+	default:
+		return NewBasic(tile)
+	}
 }

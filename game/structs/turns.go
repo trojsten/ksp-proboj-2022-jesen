@@ -6,23 +6,19 @@ import (
 )
 
 type Turn struct {
-	Game            *Game
-	Movements       []Movement
-	TileChanges     []TileChange
-	InventoryMoves  []InventoryMove
-	MirrorTeleports []MirrorTeleport
-	Crafts          []Craft
-	Stabs           []Stab
+	Game           *Game
+	Movements      []Movement
+	TileChanges    []TileChange
+	InventoryMoves []InventoryMove
+	Crafts         []Craft
+	Stabs          []Stab
+	Bonks          []Bonk
 }
 
 type Movement struct {
 	Lemur *Lemur
 	From  Coordinate
 	To    Coordinate
-}
-
-type MirrorTeleport struct {
-	Lemur *Lemur
 }
 
 type TileChange struct {
@@ -44,6 +40,11 @@ type Craft struct {
 }
 
 type Stab struct {
+	Attacker *Lemur
+	Target   *Lemur
+}
+
+type Bonk struct {
 	Attacker *Lemur
 	Target   *Lemur
 }

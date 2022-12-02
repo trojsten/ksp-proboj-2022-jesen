@@ -13,6 +13,8 @@ func Get(action string) ActionHandler {
 
 	case "STAB":
 		return Stab
+	case "BONK":
+		return Bonk
 
 	case "BUILD":
 		return Build
@@ -30,8 +32,6 @@ func Get(action string) ActionHandler {
 
 	case "MOVE":
 		return Move
-	case "MIRROR":
-		return Mirror
 	}
 
 	return Noop

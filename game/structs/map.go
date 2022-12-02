@@ -13,10 +13,7 @@ func randStoneTile() tiles.BasicTile {
 	if r < 80 {
 		return tiles.NewBasic(tiles.Stone)
 	}
-	if r < 95 {
-		return tiles.NewBasic(tiles.Coal)
-	}
-	return tiles.NewBasic(tiles.Gold)
+	return tiles.NewBasic(tiles.Iron)
 }
 
 func (w *World) LoadMap(filename string) error {
@@ -55,7 +52,7 @@ func (w *World) LoadMap(filename string) error {
 			} else if red == 0 && green == 0xffff && blue == 0 {
 				// Green = tree
 				t := tiles.NewTree()
-				t.HasCocos = true
+				t.HasLemon = true
 				w.Tiles[y][x] = t
 			} else if red == 0xffff {
 				// Red-ish = spawn point, green -> player ID

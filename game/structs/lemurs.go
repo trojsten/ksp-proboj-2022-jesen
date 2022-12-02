@@ -6,26 +6,24 @@ import (
 )
 
 type Lemur struct {
-	Player      int
-	Position    Coordinate
-	Alive       bool
-	Tools       [2]Tool
-	Cocos       int
-	Coal        int
-	Stone       int
-	Gold        int
-	LanternTime int
-	TimeInDark  int
+	Player            int
+	Position          Coordinate
+	Alive             bool
+	Tools             [2]Tool
+	Lemon             int
+	Stone             int
+	Iron              int
+	JuicerTime        int
+	TimeWithoutOxygen int
+	StunnedTime       int
 }
 
 func (l *Lemur) AddItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
-	case inventory.Cocos:
-		l.Cocos += quantity
-	case inventory.Gold:
-		l.Gold += quantity
-	case inventory.Coal:
-		l.Coal += quantity
+	case inventory.Iron:
+		l.Iron += quantity
+	case inventory.Lemon:
+		l.Lemon += quantity
 	case inventory.Stone:
 		l.Stone += quantity
 	}
@@ -33,23 +31,17 @@ func (l *Lemur) AddItem(slot inventory.InventorySlot, quantity int) {
 
 func (l *Lemur) RemoveItem(slot inventory.InventorySlot, quantity int) {
 	switch slot {
-	case inventory.Cocos:
-		if l.Cocos < quantity {
-			l.Cocos = 0
+	case inventory.Iron:
+		if l.Iron < quantity {
+			l.Iron = 0
 		} else {
-			l.Cocos -= quantity
+			l.Iron -= quantity
 		}
-	case inventory.Gold:
-		if l.Gold < quantity {
-			l.Gold = 0
+	case inventory.Lemon:
+		if l.Lemon < quantity {
+			l.Lemon = 0
 		} else {
-			l.Gold -= quantity
-		}
-	case inventory.Coal:
-		if l.Coal < quantity {
-			l.Coal = 0
-		} else {
-			l.Coal -= quantity
+			l.Lemon -= quantity
 		}
 	case inventory.Stone:
 		if l.Stone < quantity {
@@ -66,12 +58,10 @@ func (l *Lemur) RemoveItem(slot inventory.InventorySlot, quantity int) {
 
 func (l *Lemur) CountItem(slot inventory.InventorySlot) int {
 	switch slot {
-	case inventory.Cocos:
-		return l.Cocos
-	case inventory.Gold:
-		return l.Gold
-	case inventory.Coal:
-		return l.Coal
+	case inventory.Iron:
+		return l.Iron
+	case inventory.Lemon:
+		return l.Lemon
 	case inventory.Stone:
 		return l.Stone
 	case inventory.Tool1:
@@ -118,17 +108,22 @@ func (l *Lemur) AddTool(tool Tool) bool {
 	return false
 }
 
-func SpawnLemur(p *Player, g *Game) error {
+func SpawnLemur(p *Player, g *Game, hasPickaxe bool) error {
 	sp, ok := g.GetSpawnpoint(p.Idx)
 	if !ok {
 		return fmt.Errorf("no suitable spawnpoints for player %s", p.Name)
+	}
+
+	tools := [2]Tool{NoTool, NoTool}
+	if hasPickaxe {
+		tools[0] = Pickaxe
 	}
 
 	p.Lemurs = append(p.Lemurs, &Lemur{
 		Player:   p.Idx,
 		Position: sp,
 		Alive:    true,
-		Tools:    [2]Tool{Pickaxe, NoTool},
+		Tools:    tools,
 	})
 	return nil
 }

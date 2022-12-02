@@ -5,7 +5,7 @@ import sys
 class Command(enum.StrEnum):
     NOOP = "NOOP"
     STAB = "STAB"
-    SHOOT = "SHOOT"
+    BONK = "BONK"
     BUILD = "BUILD"
     BREAK = "BREAK"
     DISCARD = "DISCARD"
@@ -13,29 +13,24 @@ class Command(enum.StrEnum):
     TAKE = "TAKE"
     CRAFT = "CRAFT"
     MOVE = "MOVE"
-    MIRROR = "MIRROR"
 
 
 class Tool(enum.IntEnum):
-    LANTERN = 0
+    JUICER = 0
     PICKAXE = 1
-    HAMMER = 2
-    KNIFE = 3
-    MIRROR = 4
-    GUN = 5
-    NO_TOOL = 6
+    KNIFE = 2
+    STICK = 3
+    NO_TOOL = 4
 
 
 class TileType(enum.IntEnum):
     EMPTY = 0
     STONE = 1
-    GOLD = 2
-    COAL = 3
-    TREE = 4
-    FURNACE = 5
-    TRAP = 6
-    CHEST = 7
-    UNKNOWN = 8
+    IRON = 2
+    TREE = 3
+    TURBINE = 4
+    WALL = 5
+    UNKNOWN = 6
 
 
 class Tile:
@@ -45,34 +40,23 @@ class Tile:
     @classmethod
     def from_state(cls, state: list[int]) -> "Tile":
         typ = TileType(state.pop(0))
-        if typ == TileType.CHEST:
-            return ChestTile(state.pop(0), state.pop(0), state.pop(0), state.pop(0))
-        if typ == TileType.FURNACE:
-            return FurnaceTile(state.pop(0))
+        if typ == TileType.TURBINE:
+            return TurbineTile(state.pop(0))
         if typ == TileType.TREE:
             return TreeTile(bool(state.pop(0)))
         return Tile(typ)
 
 
-class ChestTile(Tile):
-    def __init__(self, cocos: int, gold: int, coal: int, stone: int):
-        super().__init__(TileType.CHEST)
-        self.cocos = cocos
-        self.gold = gold
-        self.coal = coal
-        self.stone = stone
-
-
-class FurnaceTile(Tile):
-    def __init__(self, coal: int):
-        super().__init__(TileType.FURNACE)
-        self.coal = coal
+class TurbineTile(Tile):
+    def __init__(self, lemon: int):
+        super().__init__(TileType.TURBINE)
+        self.lemon = lemon
 
 
 class TreeTile(Tile):
-    def __init__(self, cocos: bool):
-        super().__init__(TileType.FURNACE)
-        self.has_cocos = cocos
+    def __init__(self, lemon: bool):
+        super().__init__(TileType.TURBINE)
+        self.has_lemon = lemon
 
 
 class World:
@@ -110,9 +94,8 @@ class Lemur:
         self.alive: bool = True
         self.x: int = 0
         self.y: int = 0
-        self.cocos: int = 0
-        self.gold: int = 0
-        self.coal: int = 0
+        self.iron: int = 0
+        self.lemon: int = 0
         self.stone: int = 0
         self.tools: list[Tool | None] = []
 
@@ -125,12 +108,11 @@ class Lemur:
         self.alive = True
         self.x = data[1]
         self.y = data[2]
-        self.cocos = data[3]
-        self.gold = data[4]
-        self.coal = data[5]
-        self.stone = data[6]
+        self.iron = data[3]
+        self.lemon = data[4]
+        self.stone = data[5]
         self.tools = []
-        for t in data[7:]:
+        for t in data[6:]:
             tool = Tool(t)
             if tool == Tool.NO_TOOL:
                 self.tools.append(None)

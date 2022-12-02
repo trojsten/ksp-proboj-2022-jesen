@@ -3,11 +3,9 @@ package structs
 type Tool int
 
 const (
-	Lantern Tool = iota
+	Juicer Tool = iota
 	Pickaxe
-	Hammer
 	Knife
-	Mirror
-	Gun
+	Stick
 	NoTool
 )

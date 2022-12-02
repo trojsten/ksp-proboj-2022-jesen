@@ -4,17 +4,23 @@ import (
 	"bufio"
 	"fmt"
 	"ksp.sk/proboj/73/game/actions"
-	"ksp.sk/proboj/73/game/light"
+	"ksp.sk/proboj/73/game/oxygen"
 	"ksp.sk/proboj/73/game/structs"
 	"ksp.sk/proboj/73/game/turn"
 	"ksp.sk/proboj/73/libproboj"
+	"strconv"
 	"strings"
 )
 
 func New(r libproboj.Runner) structs.Game {
 	g := structs.Game{Runner: r}
 
-	players, mapData := r.ReadConfig()
+	players, config := r.ReadConfig()
+	configParts := strings.SplitN(config, " ", 2)
+	lemursPerPlayer, err := strconv.Atoi(configParts[1])
+	if err != nil {
+		panic(err)
+	}
 
 	for i, player := range players {
 		p := &structs.Player{
@@ -26,13 +32,16 @@ func New(r libproboj.Runner) structs.Game {
 			Lemurs:      []*structs.Lemur{},
 		}
 		g.Players = append(g.Players, p)
-		err := structs.SpawnLemur(p, &g)
-		if err != nil {
-			panic(err)
+
+		for li := 0; li < lemursPerPlayer; li++ {
+			err = structs.SpawnLemur(p, &g, li == 0)
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 
-	err := g.World.LoadMap(mapData)
+	err = g.World.LoadMap(configParts[0])
 	if err != nil {
 		panic(err)
 	}
@@ -60,7 +69,7 @@ func GreetPlayers(g *structs.Game) {
 func Run(g *structs.Game) {
 	GreetPlayers(g)
 	g.World.UpdateVisibility(g)
-	light.UpdateLight(g)
+	oxygen.Update(g)
 
 	turnNumber := 0
 	for g.IsRunning() {
@@ -114,7 +123,7 @@ func Run(g *structs.Game) {
 		turn.Settle(&g.Turn)
 
 		g.World.UpdateVisibility(g)
-		light.UpdateLight(g)
+		oxygen.Update(g)
 		g.World.Tick()
 		for _, lemur := range g.Lemurs() {
 			g.TickLemur(lemur)

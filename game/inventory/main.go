@@ -3,10 +3,9 @@ package inventory
 type InventorySlot int
 
 const (
-	Cocos InventorySlot = iota
-	Coal
+	Lemon InventorySlot = iota
 	Stone
-	Gold
+	Iron
 	Tool1
 	Tool2
 )
