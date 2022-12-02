@@ -5,7 +5,7 @@ import sys
 class Command(enum.StrEnum):
     NOOP = "NOOP"
     STAB = "STAB"
-    SHOOT = "SHOOT"
+    BONK = "BONK"
     BUILD = "BUILD"
     BREAK = "BREAK"
     DISCARD = "DISCARD"
@@ -19,7 +19,7 @@ class Tool(enum.IntEnum):
     JUICER = 0
     PICKAXE = 1
     KNIFE = 2
-    GUN = 3
+    STICK = 3
     NO_TOOL = 4
 
 

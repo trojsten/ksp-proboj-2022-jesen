@@ -6,6 +6,6 @@ const (
 	Juicer Tool = iota
 	Pickaxe
 	Knife
-	Gun
+	Stick
 	NoTool
 )

@@ -9,7 +9,7 @@ var Recipes = map[structs.Tool]Recipe{
 	structs.Juicer:  {Stone: 3},
 	structs.Pickaxe: {Stone: 2},
 	structs.Knife:   {Iron: 1},
-	structs.Gun:     {Iron: 5},
+	structs.Stick:   {Iron: 5},
 }
 
 type Recipe struct {
