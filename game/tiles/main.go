@@ -18,3 +18,14 @@ type Tile interface {
 	State() string
 	Tick()
 }
+
+func NewTile(tile TileType) Tile {
+	switch tile {
+	case Turbine:
+		return NewTurbine()
+	case Tree:
+		return NewTree()
+	default:
+		return NewBasic(tile)
+	}
+}
