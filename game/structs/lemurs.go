@@ -108,17 +108,22 @@ func (l *Lemur) AddTool(tool Tool) bool {
 	return false
 }
 
-func SpawnLemur(p *Player, g *Game) error {
+func SpawnLemur(p *Player, g *Game, hasPickaxe bool) error {
 	sp, ok := g.GetSpawnpoint(p.Idx)
 	if !ok {
 		return fmt.Errorf("no suitable spawnpoints for player %s", p.Name)
+	}
+
+	tools := [2]Tool{NoTool, NoTool}
+	if hasPickaxe {
+		tools[0] = Pickaxe
 	}
 
 	p.Lemurs = append(p.Lemurs, &Lemur{
 		Player:   p.Idx,
 		Position: sp,
 		Alive:    true,
-		Tools:    [2]Tool{Pickaxe, NoTool},
+		Tools:    tools,
 	})
 	return nil
 }
