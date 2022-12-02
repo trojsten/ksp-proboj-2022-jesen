@@ -13,6 +13,8 @@ func Get(action string) ActionHandler {
 
 	case "STAB":
 		return Stab
+	case "BONK":
+		return Bonk
 
 	case "BUILD":
 		return Build

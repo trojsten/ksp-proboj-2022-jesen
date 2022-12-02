@@ -1,6 +1,8 @@
 package constants
 
 const (
+	StickStunTime = 5
+
 	TreeGrowthRate        = 10
 	TurbineOxygenDuration = 10
 	JuicerOxygenDuration  = 10

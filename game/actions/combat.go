@@ -24,3 +24,31 @@ func Stab(g *structs.Game, lemur *structs.Lemur, args []int) {
 		Target:   target,
 	})
 }
+
+func Bonk(g *structs.Game, lemur *structs.Lemur, args []int) {
+	c := structs.Coordinate{X: args[0], Y: args[1]}
+	if !g.World.ValidCoordinate(c) {
+		return
+	}
+
+	if c.X-lemur.Position.X < -2 || c.X-lemur.Position.X > 2 {
+		return
+	}
+	if c.Y-lemur.Position.Y < -2 || c.Y-lemur.Position.Y > 2 {
+		return
+	}
+
+	if !lemur.HasTool(structs.Stick) {
+		return
+	}
+
+	target := g.LemurAt(c)
+	if target == nil {
+		return
+	}
+
+	g.Turn.Bonks = append(g.Turn.Bonks, structs.Bonk{
+		Attacker: lemur,
+		Target:   target,
+	})
+}

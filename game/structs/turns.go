@@ -12,6 +12,7 @@ type Turn struct {
 	InventoryMoves []InventoryMove
 	Crafts         []Craft
 	Stabs          []Stab
+	Bonks          []Bonk
 }
 
 type Movement struct {
@@ -39,6 +40,11 @@ type Craft struct {
 }
 
 type Stab struct {
+	Attacker *Lemur
+	Target   *Lemur
+}
+
+type Bonk struct {
 	Attacker *Lemur
 	Target   *Lemur
 }
