@@ -3,18 +3,9 @@ package structs
 import (
 	"image/png"
 	"ksp.sk/proboj/73/game/tiles"
-	"math/rand"
 	"os"
 	"path"
 )
-
-func randStoneTile() tiles.BasicTile {
-	r := rand.Intn(100)
-	if r < 80 {
-		return tiles.NewBasic(tiles.Stone)
-	}
-	return tiles.NewBasic(tiles.Iron)
-}
 
 func (w *World) LoadMap(filename string) error {
 	f, err := os.OpenFile(path.Join("maps", filename), os.O_RDONLY, os.ModePerm)
@@ -42,26 +33,36 @@ func (w *World) LoadMap(filename string) error {
 		for x := 0; x < w.Width; x++ {
 			color := im.At(im.Bounds().Min.X+x, im.Bounds().Min.Y+y)
 			red, green, blue, _ := color.RGBA()
+			red &= 255
+			green &= 255
+			blue &= 255
 
 			if red == 0 && green == 0 && blue == 0 {
 				// Black = stone
-				w.Tiles[y][x] = randStoneTile()
-			} else if red == 0xffff && green == 0xffff && blue == 0xffff {
+				w.Tiles[y][x] = tiles.NewBasic(tiles.Stone)
+			} else if red == 255 && green == 255 && blue == 255 {
 				// White = empty
 				w.Tiles[y][x] = tiles.NewBasic(tiles.Empty)
-			} else if red == 0 && green == 0xffff && blue == 0 {
+			} else if red == 0 && green == 255 && blue == 0 {
 				// Green = tree
 				t := tiles.NewTree()
 				t.HasLemon = true
 				w.Tiles[y][x] = t
-			} else if red == 0xffff {
+			} else if red == 0 && green == 0 && blue == 255 {
+				// Blue = turbine
+				t := tiles.NewTurbine()
+				t.Lemon = 1
+				w.Tiles[y][x] = t
+			} else if red == 128 && green == 128 && blue == 128 {
+				// Gray = Iron
+				w.Tiles[y][x] = tiles.NewBasic(tiles.Iron)
+			} else if red == 255 {
 				// Red-ish = spawn point, green -> player ID
 				w.Tiles[y][x] = tiles.NewBasic(tiles.Empty)
 
-				playerId := green / 257
 				w.Spawnpoints = append(w.Spawnpoints, Spawnpoint{
-					Position: Coordinate{X: x, Y: x},
-					Player:   int(playerId),
+					Position: Coordinate{X: x, Y: y},
+					Player:   int(green),
 				})
 			}
 		}

@@ -42,6 +42,14 @@ func lightFrom(w *structs.World, c structs.Coordinate, level int) {
 				continue
 			}
 
+			if w.Light[c2.Y][c2.X] >= w.Light[bfs.Coordinate.Y][bfs.Coordinate.X] {
+				continue
+			}
+
+			if !w.Visible[c2.Y][c2.X] {
+				continue
+			}
+
 			q = append(q, bfsEntry{
 				Coordinate: c2,
 				Level:      bfs.Level - 1,

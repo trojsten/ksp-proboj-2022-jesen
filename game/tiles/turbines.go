@@ -1,6 +1,7 @@
 package tiles
 
 import (
+	"encoding/json"
 	"fmt"
 	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/inventory"
@@ -9,6 +10,10 @@ import (
 type TurbineTile struct {
 	Lemon    int
 	Duration int
+}
+
+func (f *TurbineTile) MarshalJSON() ([]byte, error) {
+	return json.Marshal([]any{Turbine, f.Lemon})
 }
 
 func (f *TurbineTile) Type() TileType {

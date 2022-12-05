@@ -7,10 +7,10 @@ import (
 )
 
 type Game struct {
-	Runner  libproboj.Runner
-	World   World
-	Turn    Turn
-	Players []*Player
+	Runner  libproboj.Runner `json:"-"`
+	World   World            `json:"world"`
+	Turn    Turn             `json:"-"`
+	Players []*Player        `json:"players"`
 }
 
 func (g *Game) LemurAt(coord Coordinate) *Lemur {
@@ -85,6 +85,13 @@ func (g *Game) GetSpawnpoint(player int) (Coordinate, bool) {
 
 func (g *Game) KillLemur(lemur *Lemur) {
 	lemur.Alive = false
+
+	anyAliveLemur := false
+	for _, lemur2 := range g.Players[lemur.Player].Lemurs {
+		anyAliveLemur = anyAliveLemur || lemur2.Alive
+	}
+
+	g.Players[lemur.Player].Alive = anyAliveLemur
 }
 
 func (g *Game) TickLemur(l *Lemur) {
@@ -100,7 +107,7 @@ func (g *Game) TickLemur(l *Lemur) {
 		// The lemur is standing in the dark
 		l.TimeWithoutOxygen++
 		if l.TimeWithoutOxygen >= constants.MaxTimeWithoutOxygen {
-			l.Alive = false
+			g.KillLemur(l)
 		}
 	} else {
 		l.TimeWithoutOxygen = 0

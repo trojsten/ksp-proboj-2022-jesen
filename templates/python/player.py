@@ -1,15 +1,15 @@
-from .proboj import *
+from proboj import *
 
 
 class MyPlayer(ProbojPlayer):
     def get_color(self) -> str:
-        pass
+        return "042069"
 
     def get_name(self) -> str:
-        pass
+        return "Example.py"
 
     def make_turn(self) -> list[Turn]:
-        pass
+        return [Turn(Command.NOOP)]
 
 
 if __name__ == "__main__":

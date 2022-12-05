@@ -1,12 +1,12 @@
 package structs
 
 type Player struct {
-	Idx         int
-	Name        string
-	Color       string
-	DisplayName string
-	Alive       bool
-	Lemurs      []*Lemur
+	Idx         int      `json:"-"`
+	Name        string   `json:"name"`
+	Color       string   `json:"color"`
+	DisplayName string   `json:"display_name"`
+	Alive       bool     `json:"alive"`
+	Lemurs      []*Lemur `json:"lemurs"`
 }
 
 func (p *Player) Kill(g *Game) {

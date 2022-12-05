@@ -15,3 +15,7 @@ func (r Runner) ReadConfig() ([]string, string) {
 	data := r.readLines()
 	return players, data
 }
+
+func (r Runner) End() {
+	r.sendCommand("END", "")
+}

@@ -2,6 +2,7 @@ package game
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"ksp.sk/proboj/73/game/actions"
 	"ksp.sk/proboj/73/game/oxygen"
@@ -18,6 +19,11 @@ func New(r libproboj.Runner) structs.Game {
 	players, config := r.ReadConfig()
 	configParts := strings.SplitN(config, " ", 2)
 	lemursPerPlayer, err := strconv.Atoi(configParts[1])
+	if err != nil {
+		panic(err)
+	}
+
+	err = g.World.LoadMap(configParts[0])
 	if err != nil {
 		panic(err)
 	}
@@ -39,11 +45,6 @@ func New(r libproboj.Runner) structs.Game {
 				panic(err)
 			}
 		}
-	}
-
-	err = g.World.LoadMap(configParts[0])
-	if err != nil {
-		panic(err)
 	}
 
 	return g
@@ -129,8 +130,13 @@ func Run(g *structs.Game) {
 			g.TickLemur(lemur)
 		}
 
-		// TODO: Observer
+		data, err := json.Marshal(g)
+		if err != nil {
+			panic(err)
+		}
+		g.Runner.ToObserver(string(data))
 	}
 
 	// TODO: Scores
+	g.Runner.End()
 }

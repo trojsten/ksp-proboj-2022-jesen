@@ -2,7 +2,7 @@ import enum
 import sys
 
 
-class Command(enum.StrEnum):
+class Command(enum.Enum):
     NOOP = "NOOP"
     STAB = "STAB"
     BONK = "BONK"
@@ -15,7 +15,7 @@ class Command(enum.StrEnum):
     MOVE = "MOVE"
 
 
-class Tool(enum.IntEnum):
+class Tool(enum.Enum):
     JUICER = 0
     PICKAXE = 1
     KNIFE = 2
@@ -23,7 +23,7 @@ class Tool(enum.IntEnum):
     NO_TOOL = 4
 
 
-class TileType(enum.IntEnum):
+class TileType(enum.Enum):
     EMPTY = 0
     STONE = 1
     IRON = 2
@@ -85,6 +85,9 @@ class World:
         """
         Reads section 3 (lighting data) of the state
         """
+        if not self.light:
+            self.light = [[0] * self.width for _ in range(self.height)]
+
         for y in range(self.height):
             self.light[y] = list(map(int, input().split()))
 
@@ -177,6 +180,7 @@ class ProbojPlayer:
 
     def _greet(self):
         gr = input()
+        input()
         assert gr == "HELLO"
         print(self.get_name(), self.get_color())
         print(".")
@@ -197,6 +201,8 @@ class ProbojPlayer:
         self.world.read_world()
         self._read_players()
         self.world.read_light()
+        self.log("aaa", input())
+        self.log("aaa", input())
 
     def _send_turns(self, turns: list[Turn]):
         for t in turns:

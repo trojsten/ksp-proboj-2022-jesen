@@ -6,16 +6,16 @@ import (
 )
 
 type Lemur struct {
-	Player            int
-	Position          Coordinate
-	Alive             bool
-	Tools             [2]Tool
-	Lemon             int
-	Stone             int
-	Iron              int
-	JuicerTime        int
-	TimeWithoutOxygen int
-	StunnedTime       int
+	Player            int        `json:"-"`
+	Position          Coordinate `json:"position"`
+	Alive             bool       `json:"alive"`
+	Tools             [2]Tool    `json:"tools"`
+	Lemon             int        `json:"lemon"`
+	Stone             int        `json:"stone"`
+	Iron              int        `json:"iron"`
+	JuicerTime        int        `json:"-"`
+	TimeWithoutOxygen int        `json:"-"`
+	StunnedTime       int        `json:"stunned_time"`
 }
 
 func (l *Lemur) AddItem(slot inventory.InventorySlot, quantity int) {

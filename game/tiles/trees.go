@@ -1,6 +1,7 @@
 package tiles
 
 import (
+	"encoding/json"
 	"fmt"
 	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/inventory"
@@ -13,6 +14,10 @@ type TreeTile struct {
 
 func (t *TreeTile) Type() TileType {
 	return Tree
+}
+
+func (t *TreeTile) MarshalJSON() ([]byte, error) {
+	return json.Marshal([]any{Tree, t.HasLemon})
 }
 
 func (t *TreeTile) SeeThrough() bool {

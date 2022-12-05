@@ -1,9 +1,16 @@
 package tiles
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type BasicTile struct {
 	Tile TileType
+}
+
+func (b BasicTile) MarshalJSON() ([]byte, error) {
+	return json.Marshal([]TileType{b.Tile})
 }
 
 func (b BasicTile) Type() TileType {

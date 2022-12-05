@@ -5,12 +5,12 @@ import (
 )
 
 type World struct {
-	Width       int
-	Height      int
-	Tiles       [][]tiles.Tile
-	Visible     [][]bool
-	Light       [][]int
-	Spawnpoints []Spawnpoint
+	Width       int            `json:"width"`
+	Height      int            `json:"height"`
+	Tiles       [][]tiles.Tile `json:"tiles"`
+	Visible     [][]bool       `json:"-"`
+	Light       [][]int        `json:"light"`
+	Spawnpoints []Spawnpoint   `json:"-"`
 }
 
 type Spawnpoint struct {
@@ -30,14 +30,15 @@ func (w *World) visibleFrom(coord Coordinate) {
 
 		for _, d := range Directions {
 			nx, ny := c.X+d[0], c.Y+d[1]
-			if !w.ValidCoordinate(c) || w.Visible[ny][nx] {
+			nc := Coordinate{nx, ny}
+			if !w.ValidCoordinate(nc) || w.Visible[ny][nx] {
 				continue
 			}
 
 			w.Visible[ny][nx] = true
 
 			if w.Tiles[ny][nx].SeeThrough() {
-				q = append(q, Coordinate{X: nx, Y: ny})
+				q = append(q, nc)
 			}
 		}
 	}
