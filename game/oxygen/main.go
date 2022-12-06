@@ -13,7 +13,7 @@ type bfsEntry struct {
 	Level      int
 }
 
-func lightFrom(w *structs.World, c structs.Coordinate, level int) {
+func oxygenFrom(w *structs.World, c structs.Coordinate, level int) {
 	var q []bfsEntry
 	q = append(q, bfsEntry{
 		Coordinate: c,
@@ -28,8 +28,8 @@ func lightFrom(w *structs.World, c structs.Coordinate, level int) {
 			continue
 		}
 
-		if w.Light[bfs.Coordinate.Y][bfs.Coordinate.X] < bfs.Level {
-			w.Light[bfs.Coordinate.Y][bfs.Coordinate.X] = bfs.Level
+		if w.Oxygen[bfs.Coordinate.Y][bfs.Coordinate.X] < bfs.Level {
+			w.Oxygen[bfs.Coordinate.Y][bfs.Coordinate.X] = bfs.Level
 		}
 
 		for _, d := range structs.Directions {
@@ -42,7 +42,7 @@ func lightFrom(w *structs.World, c structs.Coordinate, level int) {
 				continue
 			}
 
-			if w.Light[c2.Y][c2.X] >= w.Light[bfs.Coordinate.Y][bfs.Coordinate.X] {
+			if w.Oxygen[c2.Y][c2.X] >= w.Oxygen[bfs.Coordinate.Y][bfs.Coordinate.X] {
 				continue
 			}
 
@@ -64,7 +64,7 @@ func Update(g *structs.Game) {
 
 	for y := 0; y < w.Height; y++ {
 		for x := 0; x < w.Width; x++ {
-			w.Light[y][x] = 0
+			w.Oxygen[y][x] = 0
 			if w.Tiles[y][x].Type() != tiles.Turbine {
 				continue
 			}
@@ -77,7 +77,7 @@ func Update(g *structs.Game) {
 	}
 
 	for _, turbine := range turbines {
-		lightFrom(w, turbine, constants.TurbineOxygenLevel)
+		oxygenFrom(w, turbine, constants.TurbineOxygenLevel)
 	}
 
 	for _, lemur := range g.Lemurs() {
@@ -85,17 +85,17 @@ func Update(g *structs.Game) {
 			// Lemur has turned on juicer
 			if lemur.HasTool(structs.Juicer) {
 				lemur.JuicerTime--
-				lightFrom(w, lemur.Position, constants.JuicerOxygenLevel)
+				oxygenFrom(w, lemur.Position, constants.JuicerOxygenLevel)
 			} else {
 				lemur.JuicerTime = 0
 			}
 		} else {
 			// Lemur does not have a turned on juicer
-			if lemur.HasTool(structs.Juicer) && lemur.CountItem(inventory.Lemon) > 0 && w.Light[lemur.Position.Y][lemur.Position.X] <= 0 {
+			if lemur.HasTool(structs.Juicer) && lemur.CountItem(inventory.Lemon) > 0 && w.Oxygen[lemur.Position.Y][lemur.Position.X] <= 0 {
 				// But he has a juicer and some lemons
 				lemur.RemoveItem(inventory.Lemon, 1)
 				lemur.JuicerTime = constants.JuicerOxygenDuration
-				lightFrom(w, lemur.Position, constants.JuicerOxygenLevel)
+				oxygenFrom(w, lemur.Position, constants.JuicerOxygenLevel)
 			}
 		}
 	}

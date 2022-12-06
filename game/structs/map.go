@@ -24,11 +24,11 @@ func (w *World) LoadMap(filename string) error {
 
 	w.Tiles = make([][]tiles.Tile, w.Height)
 	w.Visible = make([][]bool, w.Height)
-	w.Light = make([][]int, w.Height)
+	w.Oxygen = make([][]int, w.Height)
 	for y := 0; y < w.Height; y++ {
 		w.Tiles[y] = make([]tiles.Tile, w.Width)
 		w.Visible[y] = make([]bool, w.Width)
-		w.Light[y] = make([]int, w.Width)
+		w.Oxygen[y] = make([]int, w.Width)
 
 		for x := 0; x < w.Width; x++ {
 			color := im.At(im.Bounds().Min.X+x, im.Bounds().Min.Y+y)

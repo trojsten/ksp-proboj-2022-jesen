@@ -42,7 +42,7 @@ function renderFrame(f) {
     for (let y = 0; y < frame.world.height; y++) {
         for (let x = 0; x < frame.world.width; x++) {
             CTX.beginPath()
-            const transparency = 255 - (255 / 15) * frame.world.light[y][x]
+            const transparency = 255 - (255 / 15) * frame.world.oxygen[y][x]
             let hex = transparency.toString(16)
             hex = hex.length === 1 ? '0' + hex : hex
             CTX.fillStyle = "#000000" + hex

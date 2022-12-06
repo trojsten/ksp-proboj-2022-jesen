@@ -9,7 +9,7 @@ type World struct {
 	Height      int            `json:"height"`
 	Tiles       [][]tiles.Tile `json:"tiles"`
 	Visible     [][]bool       `json:"-"`
-	Light       [][]int        `json:"light"`
+	Oxygen      [][]int        `json:"oxygen"`
 	Spawnpoints []Spawnpoint   `json:"-"`
 }
 

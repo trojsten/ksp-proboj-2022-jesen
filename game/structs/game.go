@@ -103,7 +103,7 @@ func (g *Game) TickLemur(l *Lemur) {
 		l.StunnedTime--
 	}
 
-	if g.World.Light[l.Position.Y][l.Position.X] <= 0 {
+	if g.World.Oxygen[l.Position.Y][l.Position.X] <= 0 {
 		// The lemur is standing in the dark
 		l.TimeWithoutOxygen++
 		if l.TimeWithoutOxygen >= constants.MaxTimeWithoutOxygen {

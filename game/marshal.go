@@ -46,7 +46,7 @@ func StateForPlayer(g *structs.Game, player int) string {
 	for y := 0; y < g.World.Height; y++ {
 		line := []string{}
 		for x := 0; x < g.World.Width; x++ {
-			line = append(line, strconv.Itoa(g.World.Light[y][x]))
+			line = append(line, strconv.Itoa(g.World.Oxygen[y][x]))
 		}
 		b.WriteString(fmt.Sprintf("%s\n", strings.Join(line, " ")))
 	}
