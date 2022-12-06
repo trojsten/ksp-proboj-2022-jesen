@@ -3,6 +3,7 @@ package structs
 import (
 	"image/png"
 	"ksp.sk/proboj/73/game/tiles"
+	"math/rand"
 	"os"
 	"path"
 )
@@ -39,7 +40,12 @@ func (w *World) LoadMap(filename string) error {
 
 			if red == 0 && green == 0 && blue == 0 {
 				// Black = stone
-				w.Tiles[y][x] = tiles.NewBasic(tiles.Stone)
+				r := rand.Intn(3)
+				if r == 0 {
+					w.Tiles[y][x] = tiles.NewBasic(tiles.Iron)
+				} else {
+					w.Tiles[y][x] = tiles.NewBasic(tiles.Stone)
+				}
 			} else if red == 255 && green == 255 && blue == 255 {
 				// White = empty
 				w.Tiles[y][x] = tiles.NewBasic(tiles.Empty)
@@ -53,9 +59,6 @@ func (w *World) LoadMap(filename string) error {
 				t := tiles.NewTurbine()
 				t.Lemon = 1
 				w.Tiles[y][x] = t
-			} else if red == 128 && green == 128 && blue == 128 {
-				// Gray = Iron
-				w.Tiles[y][x] = tiles.NewBasic(tiles.Iron)
 			} else if red == 255 {
 				// Red-ish = spawn point, green -> player ID
 				w.Tiles[y][x] = tiles.NewBasic(tiles.Empty)
