@@ -15,6 +15,7 @@ import (
 
 func New(r libproboj.Runner) structs.Game {
 	g := structs.Game{Runner: r}
+	g.Scores = map[string]int{}
 
 	players, config := r.ReadConfig()
 	configParts := strings.SplitN(config, " ", 2)
@@ -38,6 +39,7 @@ func New(r libproboj.Runner) structs.Game {
 			Lemurs:      []*structs.Lemur{},
 		}
 		g.Players = append(g.Players, p)
+		g.Scores[p.Name] = 0
 
 		for li := 0; li < lemursPerPlayer; li++ {
 			err = structs.SpawnLemur(p, &g, li == 0)
@@ -70,6 +72,7 @@ func GreetPlayers(g *structs.Game) {
 func Run(g *structs.Game) {
 	GreetPlayers(g)
 	g.World.UpdateVisibility(g)
+	g.World.Tick()
 	oxygen.Update(g)
 
 	turnNumber := 0
@@ -137,6 +140,6 @@ func Run(g *structs.Game) {
 		g.Runner.ToObserver(string(data))
 	}
 
-	// TODO: Scores
+	g.Runner.Scores(g.Scores)
 	g.Runner.End()
 }

@@ -31,7 +31,7 @@ body {
 .canvas {
     aspect-ratio: 1;
     height: calc(100% - 1em);
-    background: #676767;
+    background: #4d4d4d;
     border: 1px solid white;
 }
 

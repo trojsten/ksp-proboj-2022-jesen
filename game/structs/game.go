@@ -11,6 +11,7 @@ type Game struct {
 	World   World            `json:"world"`
 	Turn    Turn             `json:"-"`
 	Players []*Player        `json:"players"`
+	Scores  libproboj.Scores `json:"scores"`
 }
 
 func (g *Game) LemurAt(coord Coordinate) *Lemur {
@@ -33,14 +34,13 @@ func (g *Game) LemursAt(coord Coordinate) int {
 }
 
 func (g *Game) IsRunning() bool {
-	playersAlive := 0
 	for _, player := range g.Players {
 		if player.Alive {
-			playersAlive++
+			return true
 		}
 	}
 
-	return playersAlive > 1
+	return false
 }
 
 func (g *Game) Lemurs() []*Lemur {
@@ -111,5 +111,9 @@ func (g *Game) TickLemur(l *Lemur) {
 		}
 	} else {
 		l.TimeWithoutOxygen = 0
+	}
+
+	if l.Alive {
+		g.Scores[g.Players[l.Player].Name]++
 	}
 }

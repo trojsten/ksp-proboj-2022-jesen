@@ -5,10 +5,10 @@ function renderPlayers(f) {
     for (const player of frame.players) {
         document.getElementById("players").innerHTML += `
             <div class="player ${player.alive ? '' : 'player-dead'}">
-                <div class="player-color" style="background: ${player.color}"></div>
+                <div class="player-color" style="background: #${player.color}"></div>
                 <div class="player-name">${player.display_name}</div>
+                <div class="player-score">${frame.scores[player.name]}</div>
             </div>`
-                // <div class="player-score">${frame.Scores[player.Name]}</div>
     }
 }
 
@@ -39,6 +39,18 @@ function renderFrame(f) {
         }
     }
 
+    for (let y = 0; y < frame.world.height; y++) {
+        for (let x = 0; x < frame.world.width; x++) {
+            CTX.beginPath()
+            const transparency = 255 - (255 / 15) * frame.world.light[y][x]
+            let hex = transparency.toString(16)
+            hex = hex.length === 1 ? '0' + hex : hex
+            CTX.fillStyle = "#000000" + hex
+            CTX.rect(x * GRID, y * GRID, GRID, GRID)
+            CTX.fill()
+        }
+    }
+
     for (const player of frame.players) {
         if (!player.alive) {
             continue
@@ -56,17 +68,6 @@ function renderFrame(f) {
         }
     }
 
-    for (let y = 0; y < frame.world.height; y++) {
-        for (let x = 0; x < frame.world.width; x++) {
-            CTX.beginPath()
-            const transparency = 255 - (255 / 15) * frame.world.light[y][x]
-            let hex = transparency.toString(16)
-            hex = hex.length === 1 ? '0' + hex : hex
-            CTX.fillStyle = "#000000" + hex
-            CTX.rect(x * GRID, y * GRID, GRID, GRID)
-            CTX.fill()
-        }
-    }
 
-    // renderPlayers(f)
+    renderPlayers(f)
 }
