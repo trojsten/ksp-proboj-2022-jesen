@@ -5,7 +5,7 @@ import (
 )
 
 func Move(g *structs.Game, lemur *structs.Lemur, args []int) {
-	c := structs.Coordinate{X: args[0], Y: args[1]}
+	c := structs.Coordinate{X: args[1], Y: args[0]}
 	if !g.World.ValidCoordinate(c) || !lemur.CanReach(c) {
 		return
 	}

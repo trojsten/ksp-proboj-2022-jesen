@@ -19,7 +19,7 @@ func Discard(g *structs.Game, lemur *structs.Lemur, args []int) {
 }
 
 func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
-	x, y := args[0], args[1]
+	x, y := args[1], args[0]
 	c := structs.Coordinate{X: x, Y: y}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
 		return
