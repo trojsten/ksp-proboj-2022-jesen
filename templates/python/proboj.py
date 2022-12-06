@@ -55,7 +55,7 @@ class TurbineTile(Tile):
 
 class TreeTile(Tile):
     def __init__(self, lemon: bool):
-        super().__init__(TileType.TURBINE)
+        super().__init__(TileType.TREE)
         self.has_lemon = lemon
 
 
@@ -64,7 +64,7 @@ class World:
         self.width: int = 0
         self.height: int = 0
         self.tiles: list[list[Tile]] = []
-        self.light: list[list[int]] = []
+        self.oxygen: list[list[int]] = []
 
     def read_world(self):
         """
@@ -81,15 +81,15 @@ class World:
             for x in range(self.width):
                 self.tiles[y][x] = Tile.from_state(state)
 
-    def read_light(self):
+    def read_oxygen(self):
         """
         Reads section 3 (lighting data) of the state
         """
-        if not self.light:
-            self.light = [[0] * self.width for _ in range(self.height)]
+        if not self.oxygen:
+            self.oxygen = [[0] * self.width for _ in range(self.height)]
 
         for y in range(self.height):
-            self.light[y] = list(map(int, input().split()))
+            self.oxygen[y] = list(map(int, input().split()))
 
 
 class Lemur:
@@ -129,7 +129,15 @@ class Turn:
         self.args = args
 
     def print(self):
-        print(self.command, *self.args)
+        args = []
+        for a in self.args:
+            if isinstance(a, enum.Enum):
+                a = a.value
+            if isinstance(a, int):
+                args.append(a)
+            else:
+                raise ValueError(f"Invalid argument type: {type(a)}")
+        print(self.command.value, *map(int, self.args))
 
 
 class Player:
@@ -200,9 +208,9 @@ class ProbojPlayer:
     def _read_turn(self):
         self.world.read_world()
         self._read_players()
-        self.world.read_light()
-        self.log("aaa", input())
-        self.log("aaa", input())
+        self.world.read_oxygen()
+        input()
+        input()
 
     def _send_turns(self, turns: list[Turn]):
         for t in turns:
