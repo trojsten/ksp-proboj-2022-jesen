@@ -1,3 +1,4 @@
+#!/usr/bin/python
 from proboj import *
 
 D = [(0, 1), (1, 0), (0, -1), (-1, 0)]
