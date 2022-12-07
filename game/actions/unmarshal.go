@@ -11,6 +11,9 @@ func ExecuteAction(game *structs.Game, lemur *structs.Lemur, command string) boo
 	if lemur.StunnedTime > 0 {
 		return true
 	}
+	if !lemur.Alive {
+		return true
+	}
 
 	parts := strings.Split(command, " ")
 	commandName := parts[0]
