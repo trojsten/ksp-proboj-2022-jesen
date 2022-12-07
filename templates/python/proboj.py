@@ -23,6 +23,14 @@ class Tool(enum.Enum):
     NO_TOOL = 4
 
 
+class InventorySlot(enum.Enum):
+    LEMON = 0
+    STONE = 1
+    IRON = 2
+    TOOL1 = 3
+    TOOL2 = 4
+
+
 class TileType(enum.Enum):
     EMPTY = 0
     STONE = 1
@@ -137,7 +145,7 @@ class Turn:
                 args.append(a)
             else:
                 raise ValueError(f"Invalid argument type: {type(a)}")
-        print(self.command.value, *map(int, self.args))
+        print(self.command.value, *map(int, args))
 
 
 class Player:
