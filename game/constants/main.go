@@ -3,19 +3,21 @@ package constants
 import "math"
 
 const (
-	StickStunTime = 5
+	BonkTime = 5
 
 	TreeGrowthRate         = 10
-	TurbineOxygenDuration  = 10
+	TurbineOxygenDuration  = 8
 	TurbineGeneratedLemons = 10
-	JuicerOxygenDuration   = 10
+	JuicerOxygenDuration   = 5
 
 	TurbineOxygenLevel = 15
-	JuicerOxygenLevel  = 10
+	JuicerOxygenLevel  = 5
 
-	MaxTimeWithoutOxygen = 4
+	MaxTimeWithoutOxygen = 3
 
 	WinnerScore = 50000
+
+	MaxTurns = 500
 )
 
 func Score(turn int) int {

@@ -62,6 +62,6 @@ func SettleCombat(t *structs.Turn) {
 			continue
 		}
 
-		target.StunnedTime = constants.StickStunTime
+		target.StunnedTime = constants.BonkTime
 	}
 }

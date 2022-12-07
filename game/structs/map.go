@@ -41,7 +41,7 @@ func (w *World) LoadMap(filename string) error {
 
 			if red == 0 && green == 0 && blue == 0 {
 				// Black = stone
-				r := rand.Intn(3)
+				r := rand.Intn(10)
 				if r == 0 {
 					w.Tiles[y][x] = tiles.NewBasic(tiles.Iron)
 				} else {

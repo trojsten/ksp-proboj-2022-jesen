@@ -2,6 +2,7 @@ package structs
 
 import (
 	"ksp.sk/proboj/73/game/constants"
+	"ksp.sk/proboj/73/game/globals"
 	"ksp.sk/proboj/73/game/tiles"
 	"ksp.sk/proboj/73/libproboj"
 )
@@ -34,6 +35,10 @@ func (g *Game) LemursAt(coord Coordinate) int {
 }
 
 func (g *Game) IsRunning() bool {
+	if globals.TurnNumber >= constants.MaxTurns {
+		return false
+	}
+
 	playersAlive := 0
 	for _, player := range g.Players {
 		if player.Alive {
