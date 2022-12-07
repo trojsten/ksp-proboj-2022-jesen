@@ -129,6 +129,15 @@ class Lemur:
                 self.tools.append(None)
             else:
                 self.tools.append(tool)
+    
+    def tool_index(self, tool):
+        for i in range(len(self.tools)):
+            if self.tools[i]==tool:
+                return i
+        return None
+    
+    def have_tool(self, tool):
+        return self.tool_index(tool) is not None
 
 
 class Turn:
