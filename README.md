@@ -11,12 +11,8 @@ Pohybovať a stavať budovy sa dá len na prázdne políčko. \
 Na mape sa nachádzajú aj lemury dalších hráčov.
 
 ## Ako získam kyslík ?
-<<<<<<< Updated upstream
 Hru začínam vo svojom "domčeku", s aspoň jedným stromom a turbínou, ktorá má v sebe citróny a teda generuje kyslík. Aby mi však všetci lemury neumreli, musím do turbíny nosiť citróny. 
 Ak si vyrobím Juicer viem sa vydať aj do neokysličeného prostredia, a ak mám dostatok citorónov v inventári Juicer vždy jeden zoberie a kyslík vygeneruje.
-=======
-Hru začínam vo svojom "domčeku", s aspoň jedným stromom a turbínou, ktorá má v sebe citróny a teda generuje kyslík. Aby mi však všetci lemury neumreli musím do turbíny nosiť citróny. Ak si vyrobím Juicer viem sa vydať aj do neokysličeného prostredia, ak mám dostatok citorónov v inventári Juicer vždy jeden zoberie a kyslík vygeneruje.
->>>>>>> Stashed changes
 
 ### Koľko mi citrón v turbíne vydrží?
 Turbína vie z jedného citrónu generovať kyslík po dobu 10 kôl.
