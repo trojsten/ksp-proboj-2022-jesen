@@ -13,7 +13,7 @@ World world;
 // sem pis svoj kod
 vector<Command> do_turn() {
 	Player& myself = world.players[world.my_id];
-	vector<Command> commands(myself.lemurs.size(), Command::NOOP);
+	vector<Command> commands(myself.lemurs.size(), NOOP());
 	cerr << world.players;
 	cerr << myself;
 	

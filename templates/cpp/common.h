@@ -19,7 +19,7 @@ namespace std {
 	}
 }
 
-enum class Command: int {
+enum class CommandType: int {
 	NOOP,
 	STAB,
 	BONK,
@@ -32,8 +32,17 @@ enum class Command: int {
 	MOVE,
 };
 
-std::ostream& operator<< (std::ostream& out, const Command& cmd);
+std::ostream& operator<< (std::ostream& out, const CommandType& cmd);
 
+enum class InventorySlot: int {
+	LEMON,
+	STONE,
+	IRON,
+	TOOL1,
+	TOOL2,
+};
+
+std::ostream& operator<< (std::ostream& out, const InventorySlot& i);
 
 enum class Tool: int {
 	JUICER,
@@ -61,10 +70,6 @@ std::istream& operator>> (std::istream& in, TileType& t);
 
 struct Tile {
 	TileType type;
-	
-	Tile& from_state() {
-		return *this;
-	}
 	
 	friend std::ostream& operator<< (std::ostream& out, const Tile& t) {
 		out << t.type;
@@ -220,6 +225,82 @@ struct World {
 		out << w.tiles << w.players << w.oxygen;
 		return out;
 	}
+};
+
+struct Command {
+	CommandType type;
+};
+
+struct NOOP: Command {
+	NOOP(): Command(CommandType::NOOP) {};
+};
+
+struct STAB: Command {
+	int x, y;
+	STAB(int x, int y): Command(CommandType::STAB), x(x), y(y) {};
+};
+
+struct BONK: Command {
+	int x, y;
+	BONK(int x, int y): Command(CommandType::BONK), x(x), y(y) {};
+};
+
+struct BUILD: Command {
+	int x, y;
+	TileType tile;
+	BUILD(int x, int y, TileType tile):
+		Command(CommandType::BUILD),
+		x(x),
+		y(y),
+		tile(tile) {};
+};
+
+struct BREAK: Command {
+	int x, y;
+	BREAK(int x, int y): Command(CommandType::BREAK), x(x), y(y) {};
+};
+
+struct DISCARD: Command {
+	InventorySlot item;
+	int quantity;
+	DISCARD(InventorySlot item, int quantity):
+		Command(CommandType::DISCARD),
+		item(item),
+		quantity(quantity) {};
+};
+
+struct PUT: Command {
+	int x, y;
+	InventorySlot item;
+	int quantity;
+	PUT(int x, int y, InventorySlot item, int quantity):
+		Command(CommandType::PUT),
+		x(x),
+		y(y),
+		item(item),
+		quantity(quantity) {};
+};
+
+struct TAKE: Command {
+	int x, y;
+	InventorySlot item;
+	int quantity;
+	TAKE(int x, int y, InventorySlot item, int quantity):
+		Command(CommandType::TAKE),
+		x(x),
+		y(y),
+		item(item),
+		quantity(quantity) {};
+};
+
+struct CRAFT: Command {
+	Tool tool;
+	CRAFT(Tool tool): Command(CommandType::CRAFT), tool(tool) {};
+};
+
+struct MOVE: Command {
+	int x, y;
+	MOVE(int x, int y): Command(CommandType::MOVE), x(x), y(y) {};
 };
 
 
