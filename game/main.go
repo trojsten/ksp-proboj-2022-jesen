@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"ksp.sk/proboj/73/game/actions"
+	"ksp.sk/proboj/73/game/constants"
+	"ksp.sk/proboj/73/game/globals"
 	"ksp.sk/proboj/73/game/oxygen"
 	"ksp.sk/proboj/73/game/structs"
 	"ksp.sk/proboj/73/game/turn"
@@ -75,7 +77,6 @@ func Run(g *structs.Game) {
 	g.World.Tick()
 	oxygen.Update(g)
 
-	turnNumber := 0
 	for g.IsRunning() {
 		g.Turn = structs.Turn{Game: g}
 
@@ -86,7 +87,7 @@ func Run(g *structs.Game) {
 
 			// Send state to the player
 			data := StateForPlayer(g, player.Idx)
-			resp := g.Runner.ToPlayer(player.Name, fmt.Sprintf("TURN %d", turnNumber), data)
+			resp := g.Runner.ToPlayer(player.Name, fmt.Sprintf("TURN %d", globals.TurnNumber), data)
 			if resp != libproboj.Ok {
 				g.Runner.Log(fmt.Sprintf("Player %s refused to listen to me :cry:", player.Name))
 				player.Kill(g)
@@ -133,12 +134,27 @@ func Run(g *structs.Game) {
 			g.TickLemur(lemur)
 		}
 
+		alive := 0
+		var lastPlayer *structs.Player
+		for _, player := range g.Players {
+			if !player.Alive {
+				continue
+			}
+			alive++
+			lastPlayer = player
+			g.Scores[player.Name] += constants.Score(globals.TurnNumber)
+		}
+
+		if alive == 1 {
+			g.Scores[lastPlayer.Name] += constants.WinnerScore
+		}
+
 		data, err := json.Marshal(g)
 		if err != nil {
 			panic(err)
 		}
 		g.Runner.ToObserver(string(data))
-		turnNumber++
+		globals.TurnNumber++
 	}
 
 	g.Runner.Scores(g.Scores)

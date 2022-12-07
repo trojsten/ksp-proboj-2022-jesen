@@ -112,8 +112,4 @@ func (g *Game) TickLemur(l *Lemur) {
 	} else {
 		l.TimeWithoutOxygen = 0
 	}
-
-	if l.Alive {
-		g.Scores[g.Players[l.Player].Name]++
-	}
 }
