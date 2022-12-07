@@ -3,6 +3,37 @@ import sys
 
 
 class Command(enum.Enum):
+    """
+    Reprezentuje typ príkazov.
+
+    * NOOP() - Neurobí nič
+    * STAB(x, y) - Zabiješ lemura na x, y.
+        Potrebuješ KNIFE.
+        Súradnice musia susediť hranou s mojou polohou.
+    * BONK(x, y) - Stunneš lemura na x, y.
+        Potrebuješ STICK.
+        Súradnice môžu byť v okolí 5x5 okolo mňa.
+    * BUILD(x, y, tile) - Postavíš tile na x, y.
+        Potrebuješ PICKAXE.
+        Súradnice musia susediť hranou s mojou polohou.
+        Tile je TileType.
+    * BREAK(x, y) - Zbúraš tile na x, y.
+        Potrebuješ PICKAXE.
+        Súradnice musia susediť hranou s mojou polohou.
+    * DISCARD(item, quantity) - Zahodíš item.
+        Item je jeden z InventorySlot.
+    * PUT(x, y, item, quantity) - Dáš lemurovi / turbíne item.
+        Item je jeden z InventorySlot. (Pri turbíne iba LEMON)
+        Súradnice musia susediť hranou s mojou polohou.
+    * TAKE(x, y, item, quantity) - Vyberieš z turbníny item.
+        Item je LEMON.
+        Súradnice musia susediť hranou s mojou polohou.
+    * CRAFT(tool) - Vyrobíš nástroj.
+        Tool je Tool.
+    * MOVE(x, y) - Presunieš sa na x, y.
+        Súradnice musia susediť hranou s mojou polohou.
+        Súradnice sú absolútne.
+    """
     NOOP = "NOOP"
     STAB = "STAB"
     BONK = "BONK"
@@ -16,6 +47,15 @@ class Command(enum.Enum):
 
 
 class Tool(enum.Enum):
+    """
+    Reprezentuje nástroj.
+
+    * JUICER - ak je lemur bez kyslíka a má LEMON,
+        minie LEMON a vytvára kyslík
+    * PICKAXE - lemur vie stavať a búrať
+    * KNIFE - lemur môže zabiť iného
+    * STICK - lemur môže stunnúť iného
+    """
     JUICER = 0
     PICKAXE = 1
     KNIFE = 2
@@ -24,6 +64,9 @@ class Tool(enum.Enum):
 
 
 class InventorySlot(enum.Enum):
+    """
+    Reprezentuje slot inventára.
+    """
     LEMON = 0
     STONE = 1
     IRON = 2
@@ -32,6 +75,9 @@ class InventorySlot(enum.Enum):
 
 
 class TileType(enum.Enum):
+    """
+    Reprezentuje druhy políčok.
+    """
     EMPTY = 0
     STONE = 1
     IRON = 2
@@ -42,6 +88,11 @@ class TileType(enum.Enum):
 
 
 class Tile:
+    """
+    Reprezentuje políčko.
+
+    * type - TileType tohto políčka
+    """
     def __init__(self, type: TileType):
         self.type = type
 
@@ -56,18 +107,42 @@ class Tile:
 
 
 class TurbineTile(Tile):
+    """
+    Reprezentuje turbínu.
+    Turbína produkuje kyslík, kým má dostatok LEMONov, ktoré
+    možno priávať commandom PUT.
+
+    * type - TileType tohto políčka (TURBINE)
+    * lemon - počet LEMONov v turbíne
+    """
     def __init__(self, lemon: int):
         super().__init__(TileType.TURBINE)
         self.lemon = lemon
 
 
 class TreeTile(Tile):
+    """
+    Reprezentuje citrónovník.
+    Na citrónovníku rastú LEMONy, ktoré sa dajú zbierať pomocou
+    commandu TAKE. Na citrónovníku vie byť najviac jeden LEMON.
+
+    * type - TileType tohto políčka (TREE)
+    * has_lemon - má tento strom LEMON?
+    """
     def __init__(self, lemon: bool):
         super().__init__(TileType.TREE)
         self.has_lemon = lemon
 
 
 class World:
+    """
+    Reprezentuje svet.
+
+    * width - sirka
+    * height - vyska
+    * tiles - pole [y][x] objektov Tile
+    * oxygen - pole [y][x] intov s hodnotami kyslíka
+    """
     def __init__(self):
         self.width: int = 0
         self.height: int = 0
@@ -76,7 +151,7 @@ class World:
 
     def read_world(self):
         """
-        Reads section 1 (world data) of the state
+        Prečíta sekciu 1 zo stavu
         """
         self.width, self.height = map(int, input().split())
         self.tiles = [
@@ -91,7 +166,7 @@ class World:
 
     def read_oxygen(self):
         """
-        Reads section 3 (lighting data) of the state
+        Prečíta sekciu 3 zo stavu
         """
         if not self.oxygen:
             self.oxygen = [[0] * self.width for _ in range(self.height)]
@@ -101,6 +176,16 @@ class World:
 
 
 class Lemur:
+    """
+    Reprezentuje lemura.
+
+    * alive - je živý?
+    * x, y - súradnice
+    * iron - počet IRONu v inventári
+    * lemon - počet LEMONov v inventári
+    * stone - počet STONEov v inventári
+    * tools - pole s Tool
+    """
     def __init__(self):
         self.alive: bool = True
         self.x: int = 0
@@ -111,6 +196,9 @@ class Lemur:
         self.tools: list[Tool | None] = []
 
     def read_lemur(self):
+        """
+        Prečíta lemura zo stavu hry.
+        """
         data = list(map(int, input().split()))
         if data[0] == 0:
             self.alive = False
@@ -141,11 +229,17 @@ class Lemur:
 
 
 class Turn:
-    def __init__(self, command: Command, *args: int):
+    """
+    Reprezentuje ťah konkrétneho lemura.
+    """
+    def __init__(self, command: Command, *args: int|enum.Enum):
         self.command = command
         self.args = args
 
     def print(self):
+        """
+        Vypíše ťah serveru.
+        """
         args = []
         for a in self.args:
             if isinstance(a, enum.Enum):
@@ -158,11 +252,23 @@ class Turn:
 
 
 class Player:
+    """
+    Reprezentuje hráča v hre.
+
+    * idx - jeho číslo v poli hráčov
+    * lemurs - pole objektov Lemur
+        Pole má konštantnú veľkosť, mŕtvy lemuri v ňom zostávajú.
+        Poradie lemurov sa počas hry nemení.
+    * alive - má hráč aspoň jedného živého lemura?
+    """
     def __init__(self, idx: int):
         self.idx = idx
         self.lemurs: list[Lemur] = []
 
     def read_lemurs(self):
+        """
+        Prečíta lemurov zo stavu hry.
+        """
         lemur_count = int(input())
         while len(self.lemurs) < lemur_count:
             self.lemurs.append(Lemur())
@@ -179,6 +285,13 @@ class Player:
 
 
 class ProbojPlayer:
+    """
+    Reprezentuje nášho klienta.
+
+    * world - objekt World
+    * players - pole objektov Player
+    * myself - môj hráč v poli players
+    """
     def __init__(self):
         self.world = World()
         self.players: list[Player] = []
@@ -186,24 +299,33 @@ class ProbojPlayer:
 
     @property
     def myself(self) -> Player:
+        """
+        Vráti môjho Player.
+        """
         return self.players[self._myself]
 
     def log(self, *args):
+        """
+        Vypíše dáta do logu. Syntax je rovnaká ako print().
+        """
         print(*args, file=sys.stderr)
 
     def get_color(self) -> str:
         """
-        Gets the hexadecimal color of the player without # prefix.
+        Farba hráča v hexadecimálnom tvare bez # na začiatku.
         """
         raise NotImplementedError()
 
     def get_name(self) -> str:
         """
-        Gets the player's display name. Spaces are not allowed in the name.
+        Meno hráča, ktoré sa zobrazí v observeri.
         """
         raise NotImplementedError()
 
     def _greet(self):
+        """
+        Spracuje HELLO od serveru.
+        """
         gr = input()
         input()
         assert gr == "HELLO"
@@ -212,7 +334,7 @@ class ProbojPlayer:
 
     def _read_players(self):
         """
-        Reads section 2 (players) of the state
+        Prečíta 2 sekciu stavu hry.
         """
         player_count, myself = map(int, input().split())
         self._myself = myself
@@ -223,6 +345,9 @@ class ProbojPlayer:
             self.players[i].read_lemurs()
 
     def _read_turn(self):
+        """
+        Prečíta celý stav.
+        """
         self.world.read_world()
         self._read_players()
         self.world.read_oxygen()
@@ -230,14 +355,24 @@ class ProbojPlayer:
         input()
 
     def _send_turns(self, turns: list[Turn]):
+        """
+        Odošle ťahy serveru.
+        """
         for t in turns:
             t.print()
         print(".")
 
     def make_turn(self) -> list[Turn]:
+        """
+        Vykoná ťah.
+        Funkcia vracia pole objektov Turn, jeden pre každého lemura.
+        """
         raise NotImplementedError()
 
     def run(self):
+        """
+        Hlavný cyklus hry.
+        """
         self._greet()
         while True:
             self._read_turn()
