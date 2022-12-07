@@ -184,6 +184,7 @@ class Lemur:
     * iron - počet IRONu v inventári
     * lemon - počet LEMONov v inventári
     * stone - počet STONEov v inventári
+    * stunned - počet ťahov, ktoré je lemur stunnutý
     * tools - pole s Tool
     """
     def __init__(self):
@@ -193,6 +194,7 @@ class Lemur:
         self.iron: int = 0
         self.lemon: int = 0
         self.stone: int = 0
+        self.stunned: int = 0
         self.tools: list[Tool | None] = []
 
     def read_lemur(self):
@@ -210,8 +212,9 @@ class Lemur:
         self.iron = data[3]
         self.lemon = data[4]
         self.stone = data[5]
+        self.stunned = data[6]
         self.tools = []
-        for t in data[6:]:
+        for t in data[7:]:
             tool = Tool(t)
             if tool == Tool.NO_TOOL:
                 self.tools.append(None)
