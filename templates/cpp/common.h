@@ -50,22 +50,19 @@ enum class TileType : int {
 
 struct Tile {
     TileType type;
+    int lemon = 0;
 
     friend std::ostream &operator<<(std::ostream &out, const Tile &t);
 };
 
 struct TurbineTile : Tile {
-    int lemon;
-
-    explicit TurbineTile(int lemon) : Tile{TileType::TURBINE}, lemon(lemon) {};
+    explicit TurbineTile(int lemon) : Tile{TileType::TURBINE, lemon} {};
 
     friend std::ostream &operator<<(std::ostream &out, const TurbineTile &t);
 };
 
 struct TreeTile : Tile {
-    bool has_lemon;
-
-    explicit TreeTile(bool lemon) : Tile{TileType::TREE}, has_lemon(lemon) {};
+    explicit TreeTile(bool lemon) : Tile{TileType::TREE, lemon} {};
 
     friend std::ostream &operator<<(std::ostream &out, const TreeTile &t);
 };
@@ -113,6 +110,11 @@ struct World {
 
 struct Command {
     CommandType type;
+    int x = 0, y = 0;
+    TileType tile = TileType::UNKNOWN;
+    InventorySlot item = InventorySlot::LEMON;
+    int quantity = 0;
+    Tool tool = Tool::NO_TOOL;
 };
 
 struct NOOP : Command {
@@ -120,80 +122,50 @@ struct NOOP : Command {
 };
 
 struct STAB : Command {
-    int x, y;
-
-    STAB(int x, int y) : Command{CommandType::STAB}, x(x), y(y) {};
+    STAB(int x, int y) : Command{CommandType::STAB, x, y} {};
 };
 
 struct BONK : Command {
-    int x, y;
-
-    BONK(int x, int y) : Command{CommandType::BONK}, x(x), y(y) {};
+    BONK(int x, int y) : Command{CommandType::BONK, x, y} {};
 };
 
 struct BUILD : Command {
-    int x, y;
-    TileType tile;
-
-    BUILD(int x, int y, TileType tile) :
-            Command{CommandType::BUILD},
-            x(x),
-            y(y),
-            tile(tile) {};
+    BUILD(int x, int y, TileType tile) : Command{CommandType::BUILD, x, y, tile} {};
 };
 
 struct BREAK : Command {
-    int x, y;
-
-    BREAK(int x, int y) : Command{CommandType::BREAK}, x(x), y(y) {};
+    BREAK(int x, int y) : Command{CommandType::BREAK, x, y} {};
 };
 
 struct DISCARD : Command {
-    InventorySlot item;
-    int quantity;
-
-    DISCARD(InventorySlot item, int quantity) :
-            Command{CommandType::DISCARD},
-            item(item),
-            quantity(quantity) {};
+    DISCARD(InventorySlot item, int quantity) : Command{CommandType::DISCARD} {
+        this->item = item;
+        this->quantity = quantity;
+    };
 };
 
 struct PUT : Command {
-    int x, y;
-    InventorySlot item;
-    int quantity;
-
-    PUT(int x, int y, InventorySlot item, int quantity) :
-            Command{CommandType::PUT},
-            x(x),
-            y(y),
-            item(item),
-            quantity(quantity) {};
+    PUT(int x, int y, InventorySlot item, int quantity) : Command{CommandType::PUT, x, y} {
+        this->item = item;
+        this->quantity = quantity;
+    }
 };
 
 struct TAKE : Command {
-    int x, y;
-    InventorySlot item;
-    int quantity;
-
-    TAKE(int x, int y, InventorySlot item, int quantity) :
-            Command{CommandType::TAKE},
-            x(x),
-            y(y),
-            item(item),
-            quantity(quantity) {};
+    TAKE(int x, int y, InventorySlot item, int quantity) : Command{CommandType::TAKE, x, y} {
+        this->item = item;
+        this->quantity = quantity;
+    }
 };
 
 struct CRAFT : Command {
-    Tool tool;
-
-    explicit CRAFT(Tool tool) : Command{CommandType::CRAFT}, tool(tool) {};
+    explicit CRAFT(Tool tool) : Command{CommandType::CRAFT} {
+        this->tool = tool;
+    };
 };
 
 struct MOVE : Command {
-    int x, y;
-
-    MOVE(int x, int y) : Command{CommandType::MOVE}, x(x), y(y) {};
+    MOVE(int x, int y) : Command{CommandType::MOVE, x, y} {};
 };
 
 /**
@@ -211,6 +183,8 @@ namespace std {
         return out;
     }
 }
+
+std::ostream &operator<<(std::ostream &out, const Command &cmd);
 
 std::ostream &operator<<(std::ostream &out, const CommandType &cmd);
 

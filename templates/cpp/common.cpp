@@ -71,44 +71,30 @@ std::ostream &operator<<(std::ostream &out, const Command &cmd) {
         case CommandType::NOOP:
             break;
         case CommandType::STAB:
-            out << " " << static_cast<const STAB &>(cmd).x;
-            out << " " << static_cast<const STAB &>(cmd).y;
-            break;
         case CommandType::BONK:
-            out << " " << static_cast<const BONK &>(cmd).x;
-            out << " " << static_cast<const BONK &>(cmd).y;
+        case CommandType::MOVE:
+        case CommandType::BREAK:
+            out << " " << cmd.x;
+            out << " " << cmd.y;
             break;
         case CommandType::BUILD:
-            out << " " << static_cast<const BUILD &>(cmd).x;
-            out << " " << static_cast<const BUILD &>(cmd).y;
-            out << " " << static_cast<const BUILD &>(cmd).tile;
-            break;
-        case CommandType::BREAK:
-            out << " " << static_cast<const BREAK &>(cmd).x;
-            out << " " << static_cast<const BREAK &>(cmd).y;
+            out << " " << cmd.x;
+            out << " " << cmd.y;
+            out << " " << cmd.tile;
             break;
         case CommandType::DISCARD:
-            out << " " << static_cast<const DISCARD &>(cmd).item;
-            out << " " << static_cast<const DISCARD &>(cmd).quantity;
+            out << " " << cmd.item;
+            out << " " << cmd.quantity;
             break;
         case CommandType::PUT:
-            out << " " << static_cast<const PUT &>(cmd).x;
-            out << " " << static_cast<const PUT &>(cmd).y;
-            out << " " << static_cast<const PUT &>(cmd).item;
-            out << " " << static_cast<const PUT &>(cmd).quantity;
-            break;
         case CommandType::TAKE:
-            out << " " << static_cast<const TAKE &>(cmd).x;
-            out << " " << static_cast<const TAKE &>(cmd).y;
-            out << " " << static_cast<const TAKE &>(cmd).item;
-            out << " " << static_cast<const TAKE &>(cmd).quantity;
+            out << " " << cmd.x;
+            out << " " << cmd.y;
+            out << " " << cmd.item;
+            out << " " << cmd.quantity;
             break;
         case CommandType::CRAFT:
-            out << " " << static_cast<int>(static_cast<const CRAFT &>(cmd).tool);
-            break;
-        case CommandType::MOVE:
-            out << " " << static_cast<const MOVE &>(cmd).x;
-            out << " " << static_cast<const MOVE &>(cmd).y;
+            out << " " << static_cast<int>(cmd.tool);
             break;
     }
     return out;
@@ -123,6 +109,7 @@ void greet_server(const char *name, const char *color) {
 
 void send_commands(const std::vector<Command> &commands) {
     std::ranges::copy(commands, std::ostream_iterator<Command>(std::cout, "\n"));
+    std::ranges::copy(commands, std::ostream_iterator<Command>(std::cerr, "\n"));
     std::cout << '.' << std::endl;
 }
 
@@ -161,7 +148,7 @@ std::ostream &operator<<(std::ostream &out, const TurbineTile &t) {
 }
 
 std::ostream &operator<<(std::ostream &out, const TreeTile &t) {
-    out << static_cast<Tile>(t) << " " << t.has_lemon;
+    out << static_cast<Tile>(t) << " " << t.lemon;
     return out;
 }
 
