@@ -235,7 +235,7 @@ class Turn:
     """
     Reprezentuje ťah konkrétneho lemura.
     """
-    def __init__(self, command: Command, *args: int|enum.Enum):
+    def __init__(self, command: Command, *args: int):
         self.command = command
         self.args = args
 
