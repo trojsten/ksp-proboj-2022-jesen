@@ -34,13 +34,14 @@ func (g *Game) LemursAt(coord Coordinate) int {
 }
 
 func (g *Game) IsRunning() bool {
+	playersAlive := 0
 	for _, player := range g.Players {
 		if player.Alive {
-			return true
+			playersAlive++
 		}
 	}
 
-	return false
+	return playersAlive > 1
 }
 
 func (g *Game) Lemurs() []*Lemur {
