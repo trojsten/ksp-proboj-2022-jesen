@@ -1,17 +1,18 @@
 # Pravidlá
 Hra sa hrá sa na mriežke políčok. \
-Kadždé políčko je buď okysličené alebo nie. \
+Každé políčko je buď okysličené alebo nie. \
 Kyslík sa od jeho zdroja šíri lineárne na všetky strany. \
 Každý hráč má kontrolu nad niekoľkými lemurmi. V každom kroku dáva každému lemurovi príkaz, čo má robiť. \
 Ak sa lemur nachádza na políčku bez kyslíka po viac ako *k* ťahov umiera. \
 Každý lemur má inventár na suroviny a dva nástroje. \
 Lemur vie z dostupných surovín stavať budovy a vyrábať nástroje. \
 Suroviny sa získavajú ťažením. \
-Pohybovať a stavať budovy sa dá len na prádzne políčko. \
+Pohybovať a stavať budovy sa dá len na prázdne políčko. \
 Na mape sa nachádzajú aj lemury dalších hráčov.
 
 ## Ako získam kyslík ?
-Hru začínam vo svojom "domčeku", s aspoň jedným stromom a turbínou, ktorá má v sebe *k* citrónov a teda generuje kyslík. Aby mi však všetci lemury neumreli musím do turbíny nosiť citróny. Ak si vyrobím Juicer viem sa vydať aj do neokysličeného prostredia, ak mám dostatok citorónov v inventári Juicer vždy jeden zoberie a kyslík vygeneruje.
+Hru začínam vo svojom "domčeku", s aspoň jedným stromom a turbínou, ktorá má v sebe *k* citrónov a teda generuje kyslík. Aby mi však všetci lemury neumreli, musím do turbíny nosiť citróny. 
+Ak si vyrobím Juicer viem sa vydať aj do neokysličeného prostredia, a ak mám dostatok citorónov v inventári Juicer vždy jeden zoberie a kyslík vygeneruje.
 
 ### Koľko mi citrón v turbíne vydrží?
 Turbína vie z jedného citrónu generovať kyslík po dobu *k* kôl.
@@ -22,7 +23,7 @@ Turbína vie z jedného citrónu generovať kyslík po dobu *k* kôl.
 |---	|---	|---	|
 |NOOP   	|-   	|Neurobí nič.   	|
 |MOVE   	|(x, y)   	|Súradnice musia susediť hranou s mojou polohou. Súradnice sú absolútne.   	|
-|TAKE   	|(x, y, item, quantity)   	|Vyberieš z turbníny item. Item je LEMON. Súradnice musia susediť hranou s mojou polohou.   	|
+|TAKE   	|(x, y, item, quantity)   	|Vyberieš z turbníny item. Item musí byť LEMON. Súradnice musia susediť hranou s mojou polohou.   	|
 |PUT   	|(x, y, item, quantity)   	| Dáš lemurovi / turbíne item. Item je jeden z InventorySlot. (Pri turbíne iba LEMON). Súradnice musia susediť hranou s mojou polohou.   	|
 |BUILD   	|(x, y, tile)   	|Postavíš tile na x, y. Potrebuješ PICKAXE.  Súradnice musia susediť hranou s mojou polohou. Tile je TileType.   	|
 |BREAK  	|(x, y)   	|Zbúraš tile na x, y. Potrebuješ PICKAXE. Súradnice musia susediť hranou s mojou polohou.   	|
