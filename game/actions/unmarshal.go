@@ -23,6 +23,7 @@ func ExecuteAction(game *structs.Game, lemur *structs.Lemur, command string) boo
 	for i := 1; i < len(parts); i++ {
 		num, err := strconv.Atoi(parts[i])
 		if err != nil {
+			game.Reject(command, []int{}, lemur, "the argument is not a number.")
 			return false
 		}
 		args = append(args, num)

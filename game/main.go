@@ -78,6 +78,7 @@ func Run(g *structs.Game) {
 	oxygen.Update(g)
 
 	for g.IsRunning() {
+		g.Runner.Log(fmt.Sprintf("TURN %d", globals.TurnNumber))
 		g.Turn = structs.Turn{Game: g}
 
 		for _, player := range g.Players {

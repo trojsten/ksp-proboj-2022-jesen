@@ -1,6 +1,7 @@
 package structs
 
 import (
+	"fmt"
 	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/globals"
 	"ksp.sk/proboj/73/game/tiles"
@@ -118,4 +119,12 @@ func (g *Game) TickLemur(l *Lemur) {
 	} else {
 		l.TimeWithoutOxygen = 0
 	}
+}
+
+func (g *Game) Reject(command string, args []int, lemur *Lemur, reason string) {
+	g.Runner.Log(fmt.Sprintf("Rejected '%s %v' from %s: %s", command, args, g.Players[lemur.Player].Name, reason))
+}
+
+func (g *Game) RejectSettle(command string, lemur *Lemur, reason string) {
+	g.Runner.Log(fmt.Sprintf("Rejected turn '%s' while settling from %s: %s", command, g.Players[lemur.Player].Name, reason))
 }

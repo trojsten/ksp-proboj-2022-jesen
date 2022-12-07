@@ -7,5 +7,4 @@ func Settle(t *structs.Turn) {
 	SettleInventories(t)
 	SettleBuilding(t)
 	SettleMovements(t)
-	// TODO: Settle deaths
 }

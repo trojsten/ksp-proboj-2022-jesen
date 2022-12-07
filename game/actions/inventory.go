@@ -8,6 +8,7 @@ import (
 
 func Discard(g *structs.Game, lemur *structs.Lemur, args []int) {
 	if len(args) != 2 {
+		g.Reject("DISCARD", args, lemur, "invalid number of arguments.")
 		return
 	}
 	slot := inventory.InventorySlot(args[0])
@@ -23,11 +24,13 @@ func Discard(g *structs.Game, lemur *structs.Lemur, args []int) {
 
 func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 	if len(args) != 4 {
+		g.Reject("PUT", args, lemur, "invalid number of arguments.")
 		return
 	}
 	x, y := args[0], args[1]
 	c := structs.Coordinate{X: x, Y: y}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
+		g.Reject("PUT", args, lemur, "target coordinates are unreachable.")
 		return
 	}
 
@@ -35,6 +38,7 @@ func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 	quantity := args[3]
 
 	if quantity < 0 {
+		g.Reject("PUT", args, lemur, "quantity must be a non-negative number.")
 		return
 	}
 
@@ -51,6 +55,7 @@ func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 		target, ok = locate.TurbineAt(*g, coords)
 	}
 	if !ok {
+		g.Reject("PUT", args, lemur, "there is no inventory at the coordinates.")
 		return
 	}
 
@@ -64,11 +69,13 @@ func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 
 func Take(g *structs.Game, lemur *structs.Lemur, args []int) {
 	if len(args) != 4 {
+		g.Reject("TAKE", args, lemur, "invalid number of arguments.")
 		return
 	}
 	x, y := args[0], args[1]
 	c := structs.Coordinate{X: x, Y: y}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
+		g.Reject("TAKE", args, lemur, "target coordinates are unreachable.")
 		return
 	}
 
@@ -76,15 +83,18 @@ func Take(g *structs.Game, lemur *structs.Lemur, args []int) {
 	quantity := args[3]
 
 	if quantity < 0 {
+		g.Reject("TAKE", args, lemur, "quantity must be a non-negative number.")
 		return
 	}
 
 	if slot != inventory.Lemon {
+		g.Reject("TAKE", args, lemur, "slot must be lemon.")
 		return
 	}
 
 	tree, ok := locate.TreeAt(*g, c)
 	if !ok {
+		g.Reject("TAKE", args, lemur, "no tree found at coordinates.")
 		return
 	}
 

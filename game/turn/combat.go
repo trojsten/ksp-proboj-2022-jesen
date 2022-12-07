@@ -1,6 +1,7 @@
 package turn
 
 import (
+	"fmt"
 	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/structs"
 	"ksp.sk/proboj/73/game/tiles"
@@ -59,6 +60,7 @@ func SettleCombat(t *structs.Turn) {
 		target := bonk.Target
 
 		if !canReach(attacker.Position, target.Position, &t.Game.World) {
+			t.Game.RejectSettle(fmt.Sprintf("_BONK %v", bonk.Target.Position), bonk.Attacker, "the target lemur is unreachable.")
 			continue
 		}
 

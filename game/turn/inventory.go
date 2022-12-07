@@ -1,6 +1,7 @@
 package turn
 
 import (
+	"fmt"
 	"ksp.sk/proboj/73/game/constants/crafting"
 	"ksp.sk/proboj/73/game/structs"
 )
@@ -33,6 +34,7 @@ func SettleInventories(t *structs.Turn) {
 		lemur := craft.Lemur
 		recipe, ok := crafting.Recipes[craft.Tool]
 		if !ok {
+			t.Game.RejectSettle(fmt.Sprintf("_CRAFT %v", craft.Tool), craft.Lemur, "crafting recipe not found.")
 			continue
 		}
 

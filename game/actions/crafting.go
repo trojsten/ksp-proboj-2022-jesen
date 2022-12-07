@@ -6,6 +6,7 @@ import (
 
 func Craft(g *structs.Game, lemur *structs.Lemur, args []int) {
 	if len(args) != 1 {
+		g.Reject("CRAFT", args, lemur, "invalid number of arguments.")
 		return
 	}
 	tool := structs.Tool(args[0])
