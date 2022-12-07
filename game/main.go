@@ -46,7 +46,7 @@ func New(r libproboj.Runner) structs.Game {
 		for li := 0; li < lemursPerPlayer; li++ {
 			err = structs.SpawnLemur(p, &g, li == 0)
 			if err != nil {
-				panic(err)
+				break
 			}
 		}
 	}
