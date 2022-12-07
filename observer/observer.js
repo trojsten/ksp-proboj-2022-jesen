@@ -15,7 +15,7 @@ function renderPlayers(f) {
 const TileColors = [
     "#000000",
     "#a8a8a8",
-    "#e3e3e3",
+    "#d2b4a0",
     "#298c22",
     "#0eb0cc",
     "#9a9a9a",
