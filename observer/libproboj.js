@@ -40,11 +40,11 @@ function observe(log) {
 
     FRAME = 0
     let frame = OBSLINES[0]
-    GRID = Math.min(CANVAS.width / frame.world.width, CANVAS.height / frame.world.height)
+    GRID = Math.floor(Math.min(CANVAS.width / frame.world.width, CANVAS.height / frame.world.height))
     let mapW = frame.world.width * GRID
     let mapH = frame.world.height * GRID
 
-    CTX.translate((CANVAS.width - mapW) / 2, (CANVAS.height - mapH) / 2)
+    CTX.translate(Math.floor((CANVAS.width - mapW) / 2), Math.floor((CANVAS.height - mapH) / 2))
     renderFrame(0)
 
     if (urlParams.get("autoplay") === "1") {

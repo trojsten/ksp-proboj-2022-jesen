@@ -13,7 +13,7 @@ function renderPlayers(f) {
 }
 
 const TileColors = [
-    "#000000",
+    "#4d4d4d",
     "#a8a8a8",
     "#d2b4a0",
     "#298c22",
@@ -21,33 +21,33 @@ const TileColors = [
     "#9a9a9a",
 ]
 
+function square(x, y, color) {
+    CTX.beginPath()
+    CTX.fillStyle = color
+    CTX.lineWidth = 1;
+    CTX.fillRect(x * GRID, y * GRID, GRID, GRID)
+}
+
 function renderFrame(f) {
     const frame = OBSLINES[f]
     CTX.clearRect(-GRID, -GRID, CANVAS.width+GRID, CANVAS.height+GRID);
+    CTX.fillStyle = "#000000"
+    CTX.fillRect(-GRID, -GRID, CANVAS.width+GRID, CANVAS.height+GRID);
 
     for (let y = 0; y < frame.world.height; y++) {
         for (let x = 0; x < frame.world.width; x++) {
             const tile = frame.world.tiles[y][x]
             const type = tile[0]
-            if (type === 0) {
-                continue
-            }
-            CTX.beginPath()
-            CTX.fillStyle = TileColors[type]
-            CTX.rect(x * GRID, y * GRID, GRID, GRID)
-            CTX.fill()
+            square(x, y, TileColors[type])
         }
     }
 
     for (let y = 0; y < frame.world.height; y++) {
         for (let x = 0; x < frame.world.width; x++) {
-            CTX.beginPath()
             const transparency = 255 - (255 / 15) * frame.world.oxygen[y][x]
             let hex = transparency.toString(16)
             hex = hex.length === 1 ? '0' + hex : hex
-            CTX.fillStyle = "#000000" + hex
-            CTX.rect(x * GRID, y * GRID, GRID, GRID)
-            CTX.fill()
+            square(x, y, "#000000" + hex)
         }
     }
 
@@ -61,10 +61,7 @@ function renderFrame(f) {
                 continue
             }
 
-            CTX.beginPath()
-            CTX.fillStyle = "#" + player.color
-            CTX.rect(lemur.position.x * GRID, lemur.position.y * GRID, GRID, GRID)
-            CTX.fill()
+            square(lemur.position.x, lemur.position.y, "#" + player.color)
         }
     }
 
