@@ -5,18 +5,12 @@ import (
 	"ksp.sk/proboj/73/game/tiles"
 )
 
-func TreeAt(g structs.Game, coord structs.Coordinate) *tiles.TreeTile {
+func TreeAt(g structs.Game, coord structs.Coordinate) (*tiles.TreeTile, bool) {
 	tile, ok := g.World.Tiles[coord.Y][coord.X].(*tiles.TreeTile)
-	if !ok {
-		return nil
-	}
-	return tile
+	return tile, ok
 }
 
-func TurbineAt(g structs.Game, coord structs.Coordinate) *tiles.TurbineTile {
+func TurbineAt(g structs.Game, coord structs.Coordinate) (*tiles.TurbineTile, bool) {
 	tile, ok := g.World.Tiles[coord.Y][coord.X].(*tiles.TurbineTile)
-	if !ok {
-		return nil
-	}
-	return tile
+	return tile, ok
 }

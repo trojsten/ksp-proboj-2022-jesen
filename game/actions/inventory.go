@@ -37,13 +37,14 @@ func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 		Y: y,
 	}
 
-	var target inventory.Inventory = g.LemurAt(coords)
+	var target inventory.Inventory
+	target, ok := g.LemurAt(coords)
 
 	// Lemon can be put into turbines
-	if target == nil && slot == inventory.Lemon {
-		target = locate.TurbineAt(*g, coords)
+	if !ok && slot == inventory.Lemon {
+		target, ok = locate.TurbineAt(*g, coords)
 	}
-	if target == nil {
+	if !ok {
 		return
 	}
 
@@ -56,7 +57,7 @@ func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 }
 
 func Take(g *structs.Game, lemur *structs.Lemur, args []int) {
-	x, y := args[0], args[1]
+	x, y := args[1], args[0]
 	c := structs.Coordinate{X: x, Y: y}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
 		return
@@ -64,7 +65,7 @@ func Take(g *structs.Game, lemur *structs.Lemur, args []int) {
 
 	slot := inventory.InventorySlot(args[2])
 	quantity := args[3]
-	
+
 	if quantity < 0 {
 		return
 	}
@@ -73,8 +74,8 @@ func Take(g *structs.Game, lemur *structs.Lemur, args []int) {
 		return
 	}
 
-	var tree inventory.Inventory = locate.TreeAt(*g, c)
-	if tree == nil {
+	tree, ok := locate.TreeAt(*g, c)
+	if !ok {
 		return
 	}
 

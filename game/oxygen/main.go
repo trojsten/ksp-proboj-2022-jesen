@@ -69,7 +69,7 @@ func Update(g *structs.Game) {
 				continue
 			}
 			c := structs.Coordinate{X: x, Y: y}
-			turbine := locate.TurbineAt(*g, c)
+			turbine, _ := locate.TurbineAt(*g, c)
 			if turbine.Duration > 0 {
 				turbines = append(turbines, c)
 			}

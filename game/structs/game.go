@@ -14,13 +14,13 @@ type Game struct {
 	Scores  libproboj.Scores `json:"scores"`
 }
 
-func (g *Game) LemurAt(coord Coordinate) *Lemur {
+func (g *Game) LemurAt(coord Coordinate) (*Lemur, bool) {
 	for _, lemur := range g.Lemurs() {
 		if lemur.Position == coord {
-			return lemur
+			return lemur, true
 		}
 	}
-	return nil
+	return nil, false
 }
 
 func (g *Game) LemursAt(coord Coordinate) int {
@@ -70,7 +70,7 @@ func (g *Game) GetSpawnpoint(player int) (Coordinate, bool) {
 			continue
 		}
 
-		if g.LemurAt(spawnpoint.Position) != nil {
+		if _, ok := g.LemurAt(spawnpoint.Position); ok {
 			continue
 		}
 

@@ -14,8 +14,8 @@ func Stab(g *structs.Game, lemur *structs.Lemur, args []int) {
 		return
 	}
 
-	target := g.LemurAt(c)
-	if target == nil {
+	target, ok := g.LemurAt(c)
+	if !ok {
 		return
 	}
 
@@ -42,8 +42,8 @@ func Bonk(g *structs.Game, lemur *structs.Lemur, args []int) {
 		return
 	}
 
-	target := g.LemurAt(c)
-	if target == nil {
+	target, ok := g.LemurAt(c)
+	if !ok {
 		return
 	}
 
