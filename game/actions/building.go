@@ -6,6 +6,9 @@ import (
 )
 
 func Build(g *structs.Game, lemur *structs.Lemur, args []int) {
+	if len(args) != 3 {
+		return
+	}
 	c := structs.Coordinate{X: args[0], Y: args[1]}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
 		return
@@ -24,6 +27,9 @@ func Build(g *structs.Game, lemur *structs.Lemur, args []int) {
 }
 
 func Break(g *structs.Game, lemur *structs.Lemur, args []int) {
+	if len(args) != 2 {
+		return
+	}
 	c := structs.Coordinate{X: args[0], Y: args[1]}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
 		return

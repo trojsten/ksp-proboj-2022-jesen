@@ -5,6 +5,9 @@ import (
 )
 
 func Move(g *structs.Game, lemur *structs.Lemur, args []int) {
+	if len(args) != 2 {
+		return
+	}
 	c := structs.Coordinate{X: args[0], Y: args[1]}
 	if !g.World.ValidCoordinate(c) || !lemur.CanReach(c) {
 		return

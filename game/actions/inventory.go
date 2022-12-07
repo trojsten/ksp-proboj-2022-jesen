@@ -7,6 +7,9 @@ import (
 )
 
 func Discard(g *structs.Game, lemur *structs.Lemur, args []int) {
+	if len(args) != 2 {
+		return
+	}
 	slot := inventory.InventorySlot(args[0])
 	quantity := args[1]
 
@@ -19,6 +22,9 @@ func Discard(g *structs.Game, lemur *structs.Lemur, args []int) {
 }
 
 func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
+	if len(args) != 4 {
+		return
+	}
 	x, y := args[0], args[1]
 	c := structs.Coordinate{X: x, Y: y}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
@@ -57,6 +63,9 @@ func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 }
 
 func Take(g *structs.Game, lemur *structs.Lemur, args []int) {
+	if len(args) != 4 {
+		return
+	}
 	x, y := args[0], args[1]
 	c := structs.Coordinate{X: x, Y: y}
 	if !lemur.CanReach(c) || !g.World.ValidCoordinate(c) {
