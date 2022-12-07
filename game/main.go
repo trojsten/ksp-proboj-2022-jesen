@@ -138,6 +138,7 @@ func Run(g *structs.Game) {
 			panic(err)
 		}
 		g.Runner.ToObserver(string(data))
+		turnNumber++
 	}
 
 	g.Runner.Scores(g.Scores)
