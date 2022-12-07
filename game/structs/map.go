@@ -2,6 +2,7 @@ package structs
 
 import (
 	"image/png"
+	"ksp.sk/proboj/73/game/constants"
 	"ksp.sk/proboj/73/game/tiles"
 	"math/rand"
 	"os"
@@ -57,7 +58,7 @@ func (w *World) LoadMap(filename string) error {
 			} else if red == 0 && green == 0 && blue == 255 {
 				// Blue = turbine
 				t := tiles.NewTurbine()
-				t.Lemon = 1
+				t.Lemon = constants.TurbineGeneratedLemons
 				w.Tiles[y][x] = t
 			} else if red == 255 {
 				// Red-ish = spawn point, green -> player ID

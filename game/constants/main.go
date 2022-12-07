@@ -5,9 +5,10 @@ import "math"
 const (
 	StickStunTime = 5
 
-	TreeGrowthRate        = 10
-	TurbineOxygenDuration = 10
-	JuicerOxygenDuration  = 10
+	TreeGrowthRate         = 10
+	TurbineOxygenDuration  = 10
+	TurbineGeneratedLemons = 10
+	JuicerOxygenDuration   = 10
 
 	TurbineOxygenLevel = 15
 	JuicerOxygenLevel  = 10
