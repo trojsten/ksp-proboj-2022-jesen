@@ -28,6 +28,10 @@ func Put(g *structs.Game, lemur *structs.Lemur, args []int) {
 	slot := inventory.InventorySlot(args[2])
 	quantity := args[3]
 
+	if quantity < 0 {
+		return
+	}
+
 	coords := structs.Coordinate{
 		X: x,
 		Y: y,
@@ -60,6 +64,10 @@ func Take(g *structs.Game, lemur *structs.Lemur, args []int) {
 
 	slot := inventory.InventorySlot(args[2])
 	quantity := args[3]
+	
+	if quantity < 0 {
+		return
+	}
 
 	if slot != inventory.Lemon {
 		return
