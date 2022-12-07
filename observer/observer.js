@@ -15,7 +15,7 @@ function renderPlayers(f) {
 const TileColors = [
     "#4d4d4d",
     "#a8a8a8",
-    "#d2b4a0",
+    "#d29b75",
     "#298c22",
     "#0eb0cc",
     "#9a9a9a",
@@ -44,11 +44,9 @@ function renderFrame(f) {
 
     for (let y = 0; y < frame.world.height; y++) {
         for (let x = 0; x < frame.world.width; x++) {
-            const minT = 220
+            const minT = 0.9
             const transparency = minT - (minT / 15) * frame.world.oxygen[y][x]
-            let hex = transparency.toString(16)
-            hex = hex.length === 1 ? '0' + hex : hex
-            square(x, y, "#000000" + hex)
+            square(x, y, "rgba(0,0,0,"+transparency+")")
         }
     }
 
