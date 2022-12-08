@@ -31,6 +31,7 @@ type InventoryMove struct {
 	From     inventory.Inventory
 	To       inventory.Inventory
 	Slot     inventory.InventorySlot
+	Tool     Tool
 	Quantity int
 }
 
