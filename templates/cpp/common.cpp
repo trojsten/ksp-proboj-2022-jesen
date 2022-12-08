@@ -80,7 +80,7 @@ std::ostream &operator<<(std::ostream &out, const Command &cmd) {
         case CommandType::BUILD:
             out << " " << cmd.x;
             out << " " << cmd.y;
-            out << " " << cmd.tile;
+            out << " " << static_cast<int>(cmd.tile);
             break;
         case CommandType::DISCARD:
             out << " " << cmd.item;
