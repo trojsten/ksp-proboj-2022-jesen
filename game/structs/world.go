@@ -23,6 +23,8 @@ func (w *World) visibleFrom(coord Coordinate) {
 		return
 	}
 
+	w.Visible[coord.Y][coord.X] = true
+
 	q := []Coordinate{coord}
 	for len(q) > 0 {
 		c := q[0]
