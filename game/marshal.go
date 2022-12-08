@@ -30,7 +30,7 @@ func StateForPlayer(g *structs.Game, player int) string {
 	for _, p := range g.Players {
 		b.WriteString(fmt.Sprintf("%d\n", len(p.Lemurs)))
 		for _, lemur := range p.Lemurs {
-			if lemur.Alive {
+			if lemur.Alive && p.Alive {
 				tools := []string{}
 				for _, tool := range lemur.Tools {
 					tools = append(tools, strconv.Itoa(int(tool)))
