@@ -15,7 +15,7 @@ const (
 
 	MaxTimeWithoutOxygen = 3
 
-	WinnerScore = 50000
+	WinnerScore = 150000
 
 	MaxTurns = 500
 )

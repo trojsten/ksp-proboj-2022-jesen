@@ -147,7 +147,7 @@ func Run(g *structs.Game) {
 		}
 
 		if alive == 1 {
-			g.Scores[lastPlayer.Name] += constants.WinnerScore
+			g.Scores[lastPlayer.Name] = constants.WinnerScore
 		}
 
 		data, err := json.Marshal(g)
