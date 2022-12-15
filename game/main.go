@@ -13,6 +13,7 @@ import (
 	"ksp.sk/proboj/73/libproboj"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func New(r libproboj.Runner) structs.Game {
@@ -59,7 +60,7 @@ func GreetPlayers(g *structs.Game) {
 		g.Runner.ToPlayer(player.Name, "init", "HELLO")
 		resp, data := g.Runner.ReadPlayer(player.Name)
 		if resp != libproboj.Ok {
-			g.Runner.Log(fmt.Sprintf("Player %s did not respond to HELLO.", player.Name))
+			g.Runner.Log(fmt.Sprintf("Player %s did not respond to HELLO. Runner response: %v", player.Name, resp))
 			g.Players[i].Alive = false
 			g.Runner.KillPlayer(player.Name)
 			continue
@@ -86,11 +87,12 @@ func Run(g *structs.Game) {
 				continue
 			}
 
+			start := time.Now()
 			// Send state to the player
 			data := StateForPlayer(g, player.Idx)
 			resp := g.Runner.ToPlayer(player.Name, fmt.Sprintf("TURN %d", globals.TurnNumber), data)
 			if resp != libproboj.Ok {
-				g.Runner.Log(fmt.Sprintf("Player %s refused to listen to me :cry:", player.Name))
+				g.Runner.Log(fmt.Sprintf("Player %s refused to listen to me :cry: Runner response: %v", player.Name, resp))
 				player.Kill(g)
 				continue
 			}
@@ -98,10 +100,12 @@ func Run(g *structs.Game) {
 			// Read player's response
 			resp, turnData := g.Runner.ReadPlayer(player.Name)
 			if resp != libproboj.Ok {
-				g.Runner.Log(fmt.Sprintf("Player %s was unable to provide any turn data.", player.Name))
+				g.Runner.Log(fmt.Sprintf("Player %s was unable to provide any turn data. Runner response: %v", player.Name, resp))
 				player.Kill(g)
 				continue
 			}
+			duration := time.Now().Sub(start)
+			g.Runner.Log(fmt.Sprintf("Player %s's turn took %d ms.", player.Name, duration.Milliseconds()))
 
 			// Parse the response
 			turnScanner := bufio.NewScanner(strings.NewReader(turnData))

@@ -27,7 +27,7 @@ func NewRunner() Runner {
 
 // Log prints the message to the stderr
 func (r Runner) Log(message string) {
-	_, err := fmt.Fprintf(os.Stderr, "[%s] %s\n", time.Now().Format("15:04:05"), message)
+	_, err := fmt.Fprintf(os.Stderr, "[%s] %s\n", time.Now().Format("15:04:05.000"), message)
 	if err != nil {
 		panic(err)
 	}

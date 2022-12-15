@@ -40,7 +40,7 @@ func SettleMovements(t *structs.Turn) {
 			if t.Game.LemursAt(lemur.Position) > 1 {
 				settled = false
 				lemur.Position = coordinate
-				t.Game.Runner.Log(fmt.Sprintf("Movement conflict at %v after settling. Rollbacking move of lemur %s (back to %v).", coordinate, t.Game.Players[lemur.Player].Name, coordinate))
+				t.Game.Runner.Log(fmt.Sprintf("Movement conflict at %v after settling. Rollbacking move of lemur %s (back to %v).", lemur.Position, t.Game.Players[lemur.Player].Name, coordinate))
 			}
 		}
 	}
